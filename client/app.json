@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Client",
+    "slug": "Client",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon-1-masked@3x.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icon-1-masked@3x.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon-1-masked@3x.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/icon-1-masked@3x.png"
+    }
+  }
+}
