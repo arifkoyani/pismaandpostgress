@@ -28,17 +28,17 @@ const CustomerScreen = ({navigation}) => {
     // fetchProfilePicture();
   }, []);
 
-  const navigateToKitchenDetail =async (kitchenId) => {
+  const navigateToKitchenDetail =async (brandId) => {
         const userId = await AsyncStorage.getItem("userId");
-        const response = await axios.get(`http://localhost:3500/user/${userId}`);
-        const customerName = response.data.fullName;
-    navigation.navigate("KitchenDetail", { kitchenId }, customerName);
+        const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
+        const customerName = response.data.username;
+    navigation.navigate("KitchenDetail", { brandId }, customerName);
   };
 
 
   const fetchKitchens = async () => {
     try {
-      const response = await axios.get("http://localhost:3500/kitchen");
+      const response = await axios.get("http://localhost:5000/api/brands");
       setKitchens(response.data);
     } catch (error) {
       console.log("Error fetching kitchens:", error);
@@ -46,16 +46,16 @@ const CustomerScreen = ({navigation}) => {
   };
 
   const filteredKitchens = kitchens.filter((kitchen) =>
-    kitchen.fullName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  (kitchen.name ? kitchen.name.toString() : "").toLowerCase().includes((searchQuery ? searchQuery.toString() : "").toLowerCase())
+);
 
   const renderKitchenCard = ({ item }) => (
     <View style={styles.kitchenCard}>
       <TouchableOpacity onPress={() => navigateToKitchenDetail(item._id)}>
         <Image source={{ uri: item.image }} style={styles.kitchenImage} />
-        <Text style={styles.kitchenName}>{item.fullName}</Text>
-        <Text style={styles.kitchenCuisine}>{item.expertise}</Text>
-        <Text style={styles.kitchenAddress}>{item.address}</Text>
+        <Text style={styles.kitchenName}>{item.name}</Text>
+        <Text style={styles.kitchenCuisine}>Rating {item.rating}</Text>
+        <Text style={styles.kitchenAddress}>{item.category}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -71,9 +71,9 @@ const CustomerScreen = ({navigation}) => {
     const fetchProfilePicture = async () => {
       try {
         const userId = await AsyncStorage.getItem("userId");
-        const response = await axios.get(`http://localhost:3500/user/${userId}`);
+        const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
         const profilePicture = response.data.image;
-        const customerName = response.data.fullName;
+        const customerName = response.data.username;
         setProfilePicture(profilePicture);
         setCustomerName(customerName);
       } catch (error) {
@@ -149,7 +149,7 @@ const CustomerScreen = ({navigation}) => {
 
               <TextInput
                 style={styles.searchBar}
-                placeholder="Search for kitchens"
+                placeholder="Search"
                 placeholderTextColor="#888"
                 value={searchQuery}
                 onChangeText={setSearchQuery}

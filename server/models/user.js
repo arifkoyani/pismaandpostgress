@@ -5,6 +5,7 @@ const pendingUserSchema = new mongoose.Schema(
     username: {
         //properties
         type: String,
+        unique: true
     },
     email: {
       type: String,
