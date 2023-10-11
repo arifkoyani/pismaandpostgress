@@ -11,6 +11,7 @@ const orderRoute = require("./routes/order");
 const reviewRoute = require("./routes/reviews");
 const paymentRoute = require("./routes/payment");
 const brandsRoute = require('./routes/brands');
+const wishlistRoute = require('./routes/wishlist')
 
 dotenv.config();
 
@@ -28,8 +29,10 @@ app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/reviews", reviewRoute);
-app.use("/api/payments", paymentRoute)
-app.use("/api/brands", brandsRoute)
+app.use("/api/payments", paymentRoute);
+app.use("/api/brands", brandsRoute);
+app.use("/api/wishlist", wishlistRoute)
+
 
 app.use(express.static("../client"));
 app.use('/uploads', express.static('uploads'));

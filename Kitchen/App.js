@@ -11,12 +11,13 @@ import CustomerRegisterForm from "./src/screens/Customer/CustomerRegisterForm";
 import CustomerScreen from "./src/screens/Customer/CustomerScreen";
 import ChefDisplay from "./src/screens/Customer/ChefDisplay"
 import ChefDetail from "./src/screens/Customer/ChefDetail";
-import KitchenDetail from "./src/screens/Customer/KitchenDetail";
+import BrandDetail from "./src/screens/Customer/BrandDetail";
 import CartScreen from "./src/screens/Customer/CartScreen";
 import PlaceOrder from "./src/screens/Customer/PlaceOrder";
 import OrderPlaced from "./src/screens/Customer/OrderPlaced";
 import CustomerOrder from "./src/screens/Customer/CustomerOrders"
 import ReviewPage from "./src/screens/Customer/ReviewPage";
+import ProductDetail from './src/screens/Customer/ProductDetail';
 import ForgotPasswordForm from "./src/screens/Reset/ForgotPasswordForm";
 import ForgotPasswordConfirmation from "./src/screens/Reset/ForgotPasswordConfirmation";
 import { store } from "./src/store";
@@ -44,7 +45,8 @@ function App() {
           <Stack.Screen name='CustomerScreen' component={CustomerScreen} />
           <Stack.Screen name='ChefDisplay' component={ChefDisplay} />
           <Stack.Screen name='ChefDetail' component={ChefDetail} />
-          <Stack.Screen name='KitchenDetail' component={KitchenDetail} />
+          <Stack.Screen name= 'ProductDetail' component={ProductDetail}/>
+          <Stack.Screen name='BrandDetail' component={BrandDetail} />
           <Stack.Screen name='Review' component={ReviewPage} />
           <Stack.Screen name='CartScreen' component={CartScreen} />
           <Stack.Screen name='CustomerOrder' component={CustomerOrder} />

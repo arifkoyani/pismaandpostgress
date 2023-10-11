@@ -28,11 +28,12 @@ const CustomerScreen = ({navigation}) => {
     // fetchProfilePicture();
   }, []);
 
-  const navigateToKitchenDetail =async (brandId) => {
+  const navigateToKitchenDetail = async (brandId, brand) => {
         const userId = await AsyncStorage.getItem("userId");
         const response = await axios.get(`http://localhost:5000/api/users/${userId}`);
         const customerName = response.data.username;
-    navigation.navigate("KitchenDetail", { brandId }, customerName);
+        console.log(brand)
+    navigation.navigate("BrandDetail",  brand , customerName);
   };
 
 
@@ -51,7 +52,7 @@ const CustomerScreen = ({navigation}) => {
 
   const renderKitchenCard = ({ item }) => (
     <View style={styles.kitchenCard}>
-      <TouchableOpacity onPress={() => navigateToKitchenDetail(item._id)}>
+      <TouchableOpacity onPress={() => navigateToKitchenDetail(item._id, item.store)}>
         <Image source={{ uri: item.image }} style={styles.kitchenImage} />
         <Text style={styles.kitchenName}>{item.name}</Text>
         <Text style={styles.kitchenCuisine}>Rating {item.rating}</Text>
@@ -86,7 +87,7 @@ const CustomerScreen = ({navigation}) => {
       navigation.navigate("EditProfile", { userId });
     };
   
-    const navigateToChefScreen = () => {
+    const navigateToWishlistScreen = () => {
       navigation.navigate("ChefDisplay");
     };
   
@@ -108,9 +109,9 @@ const CustomerScreen = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.sidebarItem}
-          onPress={() => navigateToChefScreen()}
+          onPress={() => navigateToWishlistScreen()}
         >
-          <Text>Chef</Text>
+          <Text>Wishlist</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.sidebarItem}
