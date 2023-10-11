@@ -67,22 +67,48 @@ const AddForm = ({ onClose }) => {
               <label className="radio-label">
                 <input
                   type="radio"
-                  value="Women Clothing"
-                  checked={selectedCategory === "Women Clothing"}
+                  value="cosmetics"
+                  checked={selectedCategory === "cosmetics"}
                   onChange={handleCategoryChange}
                 />
-                Women Clothing
+                Cosmetics
               </label>
               <label className="radio-label">
                 <input
                   type="radio"
-                  value="Men Clothing"
-                  checked={selectedCategory === "Men Clothing"}
+                  value="jewelry"
+                  checked={selectedCategory === "jewelry"}
                   onChange={handleCategoryChange}
                 />
-                Men Clothing
+                Jewelry
               </label>
-              
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  value="toys"
+                  checked={selectedCategory === "toys"}
+                  onChange={handleCategoryChange}
+                />
+                Toys
+              </label>
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  value="household"
+                  checked={selectedCategory === "household"}
+                  onChange={handleCategoryChange}
+                />
+                House Decor
+              </label>
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  value="wearables"
+                  checked={selectedCategory === "wearables"}
+                  onChange={handleCategoryChange}
+                />
+                Wearables
+              </label>
             </div>
           </div>
           <div className="modal-field">

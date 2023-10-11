@@ -2,17 +2,11 @@ const mongoose = require("mongoose");
 
 const pendingUserSchema = new mongoose.Schema(
   {
-    name: {
+    username: {
         //properties
         type: String,
     },
     email: {
-      type: String,
-    },
-    phoneNumber: {
-      type: String,
-    },
-    address: {
       type: String,
     },
     password: {
@@ -22,10 +16,18 @@ const pendingUserSchema = new mongoose.Schema(
     status:{
       type:String // pending, active, rejected
     },
-    image:{
-      type:String,
-      required: true
+    verificationCode: {
+      type: String,
     },
+    verified: {
+      type: Boolean,
+    },
+    resetToken: {
+      type: String,
+    },
+    resetTokenExpiration: {
+      type: Date,
+    }
   },
   { timestamps: true }
 );

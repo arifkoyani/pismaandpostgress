@@ -153,7 +153,6 @@ export default function BasicTable() {
 
   return (
     <div className="Table">
-      <h3>All Customers</h3>
       <MUIDataTable
         title=""
         data={userList}

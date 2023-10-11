@@ -4,15 +4,16 @@ import { UilSignOutAlt } from "@iconscout/react-unicons";
 import { SidebarData } from "../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
-import image from '../imgs/icon-1-masked.png'
+import { useDispatch } from 'react-redux';
+import { logout } from "./redux/UserSlice";
 
 const Sidebar = ({ onMenuItemSelect }) => {
   const [selected, setSelected] = useState(0);
   const [expanded, setExpaned] = useState(true)
+  const dispatch = useDispatch();
   
   const handleMenuItemClick = (index) => {
     setSelected(index);
-    console.log(SidebarData[index])
     onMenuItemSelect(SidebarData[index]); 
   };
 
@@ -24,7 +25,6 @@ const Sidebar = ({ onMenuItemSelect }) => {
       left : '-60%'
     }
   }
-  console.log(window.innerWidth)
   return (
     <>
       <div className="bars" style={expanded?{left: '60%'}:{left: '5%'}} onClick={()=>setExpaned(!expanded)}>
@@ -34,10 +34,9 @@ const Sidebar = ({ onMenuItemSelect }) => {
     variants={sidebarVariants}
     animate={window.innerWidth<=768?`${expanded}`:''}
     >
-      {/* logo */}
       <div className="logo">
         <span>
-          <img src={image} style={{width:"50%", marginLeft:"50px"}}/>
+          Dollar<span>W</span>ala
         </span>
       </div>
 
@@ -54,9 +53,10 @@ const Sidebar = ({ onMenuItemSelect }) => {
             </div>
           );
         })}
-        {/* signoutIcon */}
+
         <div className="menuItem">
-          <UilSignOutAlt />
+        <UilSignOutAlt onClick={() => dispatch(logout())} />
+
         </div>
       </div>
     </motion.div>

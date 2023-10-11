@@ -3,35 +3,20 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 const User = require("../models/approve");
 const e = require("express");
-const Pending = require('../models/pending');
-
-const multer = require("multer")
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); 
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname); 
-  },
-});
-const upload = multer({ storage: storage });
+const Pending = require('../models/user');
 
 //Authentication routes
-router.post("/register", upload.single('image'), async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     // if (!req.file) {
     //   return res.status(400).send('No file uploaded.');
     // }
     const {
-      name,
+      username,
       email,
-      address,
-      phoneNumber,
       password,
       status
     } = req.body;
-    const image = 'uploads/' + req.body.image;
 
      // Encrypt password
      const hashedPassword = await bcrypt.hash(password, 10);
@@ -39,7 +24,6 @@ router.post("/register", upload.single('image'), async (req, res) => {
 
     const existingUser = await Pending.findOne({ email });
     if (existingUser) {
-
       if(existingUser.status === "approved"){
         return res.status(422).json({ message: "Email already exists" });
       }
@@ -50,12 +34,9 @@ router.post("/register", upload.single('image'), async (req, res) => {
     else{
 
         const pending = new Pending({
-          name,
+          username,
           email: email.toLowerCase(),
-          address,
-          phoneNumber,
           password: hashedPassword,
-          image,
           status: 'pending',
           verificationCode:'',
           resetToken:'',
@@ -77,29 +58,23 @@ router.post("/register", upload.single('image'), async (req, res) => {
 // Login user
 
 router.post("/login", async (req, res) => {
-  const { email, password} = req.body;
+  const { username, password} = req.body;
   
   try {
-    const user = await Pending.findOne({ email: email.toLowerCase() });
-    if (user && user.status === "approved") {
+    const user = await Pending.findOne({ username: username.toLowerCase() });
+    if (user) {
       const isPasswordMatch = await bcrypt.compare(password, user.password);
       if (!isPasswordMatch) {
         return res.status(402).json({ message: "Invalid password" });
       }
-
-      console.log(user.image)
       return res.send({
         message: "Logged in successfully",
         user: {
           email: user.email,
-          image: user.image,
-          name: user.name,
+          username: user.username,
           id: user._id
         },
       });
-    }
-    else if ( user && user.status === "pending"){
-      return res.status(401).json({ message: "Account not approved yet" });
     }
     else{
       return res.status(400).json({ message: "User doesn't exist with this email" });

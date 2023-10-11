@@ -138,7 +138,6 @@ export default function BasicTable() {
 
   return (
     <div className="Table">
-      <h3>All Products</h3>
       <Button variant="contained" color="primary" onClick={handleOpenModal}>
         Add New Product
       </Button>
