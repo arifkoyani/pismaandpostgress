@@ -12,7 +12,7 @@ const CustomerOrder = ({navigation}) => {
   
     const fetchOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:3500/orders");
+        const response = await axios.get("http://localhost:5000/api/orders");
         const ordersData = response.data;
         const userId = await AsyncStorage.getItem("userId");
   

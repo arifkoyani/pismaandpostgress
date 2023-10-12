@@ -43,7 +43,7 @@ const WishlistScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.brandName}>{products.length} Products in Stock</Text>
+      <Text style={styles.brandName}>{products.length} item in your wishlist</Text>
       <FlatList
         data={products}
         keyExtractor={(item) => item._id}

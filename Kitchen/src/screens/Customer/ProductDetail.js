@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity, Picker,ImageBackground } from "react-native";
 import axios from "axios";
 import { FontAwesome } from "@expo/vector-icons";
+import { addToCart } from "../../features/BasketSlice";
+import { useDispatch } from "react-redux";
 
 const ProductDetailScreen = ({ route, navigation }) => {
   const { productId } = route.params;
@@ -9,6 +11,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
   const [selectedSize, setSelectedSize] = useState("XS"); // Initial size selection
   const [isWishlist, setIsWishlist] = useState(false);
   const sizes = ["XS", "S", "M", "L", "XL"];
+  const dispatch = useDispatch();
 
   const handleWishlist = async () => {
     try {
@@ -75,7 +78,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
       <Text style={styles.heading}>Description:</Text>
       <Text style={styles.productDescription}>{product.description}</Text>
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.button} onPress={() => { /* Add to cart logic */ }}>
+        <TouchableOpacity style={styles.button} onPress={() => { dispatch(addToCart) }}>
             <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
             

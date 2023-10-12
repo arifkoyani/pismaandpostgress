@@ -6,11 +6,7 @@ import Splash from "./src/screens/Splash";
 import SignupScreen from "./src/screens/SignupScreen";
 import SigninScreen from "./src/screens/SigninScreen";
 import EditProfile from "./src/screens/EditProfile";
-import CustomerLoginForm from "./src/screens/Customer/CustomerLoginForm";
-import CustomerRegisterForm from "./src/screens/Customer/CustomerRegisterForm";
 import CustomerScreen from "./src/screens/Customer/CustomerScreen";
-import ChefDisplay from "./src/screens/Customer/ChefDisplay"
-import ChefDetail from "./src/screens/Customer/ChefDetail";
 import BrandDetail from "./src/screens/Customer/BrandDetail";
 import CartScreen from "./src/screens/Customer/CartScreen";
 import PlaceOrder from "./src/screens/Customer/PlaceOrder";
@@ -20,6 +16,7 @@ import ReviewPage from "./src/screens/Customer/ReviewPage";
 import ProductDetail from './src/screens/Customer/ProductDetail';
 import ForgotPasswordForm from "./src/screens/Reset/ForgotPasswordForm";
 import ForgotPasswordConfirmation from "./src/screens/Reset/ForgotPasswordConfirmation";
+import WishlistScreen from './src/screens/Customer/WishlistScreen';
 import { store } from "./src/store";
 import { Provider } from "react-redux";
 const Stack = createStackNavigator();
@@ -43,8 +40,7 @@ function App() {
           />
           <Stack.Screen name='CustomerLogin' component={CustomerLoginForm} />
           <Stack.Screen name='CustomerScreen' component={CustomerScreen} />
-          <Stack.Screen name='ChefDisplay' component={ChefDisplay} />
-          <Stack.Screen name='ChefDetail' component={ChefDetail} />
+          <Stack.Screen name='WishlistScreen' component={WishlistScreen} />
           <Stack.Screen name= 'ProductDetail' component={ProductDetail}/>
           <Stack.Screen name='BrandDetail' component={BrandDetail} />
           <Stack.Screen name='Review' component={ReviewPage} />

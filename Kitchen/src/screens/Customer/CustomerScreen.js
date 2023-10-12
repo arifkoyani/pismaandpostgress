@@ -88,7 +88,7 @@ const CustomerScreen = ({navigation}) => {
     };
   
     const navigateToWishlistScreen = () => {
-      navigation.navigate("ChefDisplay");
+      navigation.navigate("WishlistScreen");
     };
   
     return (
@@ -130,7 +130,7 @@ const CustomerScreen = ({navigation}) => {
           style={styles.sidebarItem}
           onPress={async () => {
             dispatch(logout());
-            navigation.navigate("CustomerLogin")
+            navigation.navigate("Signin")
             await AsyncStorage.clear();
           }}
         >
