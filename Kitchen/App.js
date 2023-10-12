@@ -34,11 +34,6 @@ function App() {
 
           <Stack.Screen name='EditProfile' component={EditProfile} />
 
-          <Stack.Screen
-            name='CustomerRegister'
-            component={CustomerRegisterForm}
-          />
-          <Stack.Screen name='CustomerLogin' component={CustomerLoginForm} />
           <Stack.Screen name='CustomerScreen' component={CustomerScreen} />
           <Stack.Screen name='WishlistScreen' component={WishlistScreen} />
           <Stack.Screen name= 'ProductDetail' component={ProductDetail}/>

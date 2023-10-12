@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { View, Text,StyleSheet} from "react-native";
+import { View, Text,StyleSheet, Image, TouchableOpacity} from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { Button } from "react-native-elements";
 import axios from "axios";
 
 const ForgotPasswordConfirmation = ({navigation, route}) => {
@@ -12,10 +11,15 @@ const ForgotPasswordConfirmation = ({navigation, route}) => {
   const [message, setMessage] = useState("");
 
   const handleSubmit = async () => {
+    if(!newPassword || !verificationCode){
+      setMessage('Fields cannot be empty');
+      return;
+    }else setMessage("");
+
     if(newPassword !== confirmPassword){
       setMessage('Passwords do not match');
       return;
-    }
+    }else setMessage("");
     
       const data = {
         email:email,
@@ -24,19 +28,25 @@ const ForgotPasswordConfirmation = ({navigation, route}) => {
       };
 
       await axios  
-      .post("http://localhost:3500/reset/confirm", data)
+      .post("http://localhost:5000/api/reset/confirm", data)
       .then((response) => {
         console.log(response)
+        setMessage(response.data.message);
         navigation.navigate("Signin");
       })
       .catch((err)=>{
       console.error("Error:", err);
+      setMessage(response.data.message);
       alert(`Something went wrong! ${err}`)
       })
   };
 
   return (
     <View style={styles.container}>
+       <Image
+        source={require('../../images/logoo.png')} 
+        style={styles.logo}
+      />
       <Text style={styles.title}>Forgot Password Confirmation</Text>
       <TextInput
         style={styles.input}
@@ -61,17 +71,9 @@ const ForgotPasswordConfirmation = ({navigation, route}) => {
          value={confirmPassword}
          onChangeText={(text) => setConfirmPassword(text)}
        />
-      <Button
-        title="Submit"
-        onPress={handleSubmit}
-        color="#09605e"
-      />
-      <Text>Try to login</Text>
-      
-      {/* <Button
-        onPress={handleResendCode}
-        style={styles.resendButton}
-      >Resend Code</Button> */}
+      <TouchableOpacity style={styles.buttonn} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Reset Password</Text>
+      </TouchableOpacity>
       {message !== "" && <Text style={styles.message}>{message}</Text>}
     </View>
   );
@@ -81,13 +83,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    justifyContent:"center"
+    justifyContent:"center",
+    backgroundColor:"white"
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 16,
     textAlign: "center",
+  },
+  logo: {
+    width: 100,
+    height: "141px",
+    bottom: "65px",
+    left: "120px",
   },
   input: {
     height: 40,
@@ -106,6 +115,23 @@ const styles = StyleSheet.create({
   resendButton:{
     margintop:8,
     backgroundColor:'transparent'
+  },
+  buttonText: {
+    color:"white",
+    justifyContent:"center",
+    textAlign:"center"
+   
+    
+  },
+  buttonn: {
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    justifyContent: "center", // Center button within its row
+    borderRadius: "10px",
+    backgroundColor: '#BC8752',
+    boxShadow: "0px 4px 4px 0px #BD8853",
   }
 });
 

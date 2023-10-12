@@ -80,8 +80,10 @@ const SignInPage = ({navigation}) => {
             secureTextEntry={true}
           />
         </View>
+        <TouchableOpacity onPress={() => navigation.navigate("ForgotPassword")}>
+          <Text style={styles.forgotPassword}>Forgot Password?</Text>
+        </TouchableOpacity>
 
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
 
         <View style={styles.rememberMeContainer}>
           <CheckBox
