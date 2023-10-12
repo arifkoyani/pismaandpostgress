@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, Picker,ImageBackground } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import axios from "axios";
 import { FontAwesome } from "@expo/vector-icons";
 import { addToCart } from "../../features/BasketSlice";
@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux";
 const ProductDetailScreen = ({ route, navigation }) => {
   const { productId } = route.params;
   const [product, setProduct] = useState(null);
-  const [selectedSize, setSelectedSize] = useState("XS"); // Initial size selection
+  const [selectedSize, setSelectedSize] = useState("XS");
+  const [quantity, setQuantity] = useState(1); // Initial quantity
   const [isWishlist, setIsWishlist] = useState(false);
   const sizes = ["XS", "S", "M", "L", "XL"];
   const dispatch = useDispatch();
@@ -16,7 +17,6 @@ const ProductDetailScreen = ({ route, navigation }) => {
   const handleWishlist = async () => {
     try {
       const response = await axios.post(`http://localhost:5000/api/wishlist/${productId}`);
-      console.log(response)
       if (response.status === 200) {
         setIsWishlist(!isWishlist);
       }
@@ -26,7 +26,6 @@ const ProductDetailScreen = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    // Fetch product details using the productId
     const fetchProductDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
@@ -43,14 +42,20 @@ const ProductDetailScreen = ({ route, navigation }) => {
     return <Text>Loading...</Text>;
   }
 
+  const incrementQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={{ uri: `http://localhost:5000/${product.image}` }} style={styles.productImage}>
-        {/* Wishlist Icon */}
-        <TouchableOpacity
-          style={styles.wishlistIcon}
-          onPress={handleWishlist}
-        >
+        <TouchableOpacity style={styles.wishlistIcon} onPress={handleWishlist}>
           <FontAwesome name={isWishlist ? "heart" : "heart-o"} size={24} color="red" />
         </TouchableOpacity>
       </ImageBackground>
@@ -59,35 +64,58 @@ const ProductDetailScreen = ({ route, navigation }) => {
         <Text style={styles.productPrice}>Price: Rs.{product.price}</Text>
       </View>
       <View style={styles.sizeRow}>
-  <Text>Select Size:</Text>
-  <View style={styles.sizeButtons}>
-    {sizes.map((size) => (
-      <TouchableOpacity
-        key={size}
-        style={[
-          styles.sizeButton,
-          selectedSize === size ? styles.selectedSize : null
-        ]}
-        onPress={() => setSelectedSize(size)}
-      >
-        <Text style={styles.sizeButtonText}>{size}</Text>
-      </TouchableOpacity>
-    ))}
-  </View>
-</View>
+        <Text>Select Size:</Text>
+        <View style={styles.sizeButtons}>
+          {sizes.map((size) => (
+            <TouchableOpacity
+              key={size}
+              style={[
+                styles.sizeButton,
+                selectedSize === size ? styles.selectedSize : null
+              ]}
+              onPress={() => setSelectedSize(size)}
+            >
+              <Text style={styles.sizeButtonText}>{size}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+      <View style={styles.quantityRow}>
+        <Text>Quantity: {quantity}</Text>
+        <View style={styles.quantityButtons}>
+          <TouchableOpacity onPress={decrementQuantity}>
+            <FontAwesome name="minus" size={24} color="#000" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={incrementQuantity}>
+            <FontAwesome name="plus" size={24} color="#000" />
+          </TouchableOpacity>
+        </View>
+      </View>
       <Text style={styles.heading}>Description:</Text>
       <Text style={styles.productDescription}>{product.description}</Text>
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.button} onPress={() => { dispatch(addToCart) }}>
-            <Text style={styles.buttonText}>Add to Cart</Text>
+        <TouchableOpacity style={styles.button} onPress={() => dispatch(addToCart({ ...product, quantity }))}>
+          <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
-            
       </View>
     </View>
   );
 };
 
+// Add these new styles for quantity selection
 const styles = StyleSheet.create({
+  // ... (existing styles)
+
+  quantityRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 10,
+  },
+  quantityButtons: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     padding: 16,

@@ -6,7 +6,7 @@ const Splash = ({ navigation }) => {
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
         <Image
-          source={require('../images/logoo.png')} // Replace with the actual path to your image
+          source={require('../images/logoo.png')} 
           style={styles.image}
         />
       </TouchableOpacity>

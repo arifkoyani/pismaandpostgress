@@ -16,19 +16,18 @@ export default function PlaceOrder({ navigation }) {
   const handleConfirmOrder = () => {
     if (state.cart.items.length > 0) {
       axios
-        .post("http://localhost:3500/orders/", {
+        .post("http://localhost:5000/api/orders/", {
           customerName: state.user.user.name,
-          customerId: state.user.user.userId,
           address: state.user.user.address,
           phoneNumber:state.user.user.phoneNumber,
-          foodItems: state.cart.items,
+          cartItems: state.cart.items,
           status: "Processing",
           totalPrice: state.cart.items.reduce(
             (total, item) => total + item.price * item.quantity,
             0
           ),
-          kitchenName: state.cart.items[0].kitchen.fullName,
-          paymentMethod,
+          brandName: state.cart.items[0].brand,
+          paymentMethod:card,
         })
         .then((response) => {
           console.log(response.data);
@@ -49,7 +48,7 @@ export default function PlaceOrder({ navigation }) {
 
       <Text style={styles.label}>Customer Address:</Text>
       <Text style={styles.text}>{state.user.user.address}</Text>
-      <Text style={styles.label}>Kitchen Name:</Text>
+      <Text style={styles.label}>Brand Name:</Text>
       <Text style={styles.text}>{state.cart.items[0].kitchen.fullName}</Text>
       <Text style={styles.label}>Total Price:</Text>
       <Text style={styles.text}>
