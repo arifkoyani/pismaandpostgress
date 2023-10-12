@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import "./Modal.css";
 
 const AddForm = ({ onClose }) => {
-  const [selectedCategory, setSelectedCategory] = useState(""); // State to store the selected category
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState(""); // State to store the selected category
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
+  };
+
+  const handleBrandChange = (e) => {
+    setSelectedBrand(e.target.value);
   };
 
   const handleSubmit = async () => {
@@ -16,6 +21,7 @@ const AddForm = ({ onClose }) => {
       formData.append("price", parseFloat(document.getElementById("price").value));
       formData.append("description", document.getElementById("description").value);
       formData.append("category", selectedCategory);
+      formData.append("brand", selectedBrand)
 
       const fileInput = document.getElementById("fileInput");
       if (fileInput.files.length > 0) {
@@ -23,6 +29,7 @@ const AddForm = ({ onClose }) => {
       }
 
       formData.append("categories", selectedCategory);
+      formData.append("brand", selectedBrand);
 
       const response = await fetch("http://localhost:5000/api/products", {
         method: "POST",
@@ -67,50 +74,58 @@ const AddForm = ({ onClose }) => {
               <label className="radio-label">
                 <input
                   type="radio"
-                  value="cosmetics"
-                  checked={selectedCategory === "cosmetics"}
+                  value="womenclothing"
+                  checked={selectedCategory === "womenclothing"}
                   onChange={handleCategoryChange}
                 />
-                Cosmetics
+                Women Clothing
               </label>
               <label className="radio-label">
                 <input
                   type="radio"
-                  value="jewelry"
-                  checked={selectedCategory === "jewelry"}
+                  value="menclothing"
+                  checked={selectedCategory === "menclothing"}
                   onChange={handleCategoryChange}
                 />
-                Jewelry
+                Men Clothing
               </label>
-              <label className="radio-label">
-                <input
-                  type="radio"
-                  value="toys"
-                  checked={selectedCategory === "toys"}
-                  onChange={handleCategoryChange}
-                />
-                Toys
-              </label>
-              <label className="radio-label">
-                <input
-                  type="radio"
-                  value="household"
-                  checked={selectedCategory === "household"}
-                  onChange={handleCategoryChange}
-                />
-                House Decor
-              </label>
-              <label className="radio-label">
-                <input
-                  type="radio"
-                  value="wearables"
-                  checked={selectedCategory === "wearables"}
-                  onChange={handleCategoryChange}
-                />
-                Wearables
-              </label>
+              
             </div>
           </div>
+          <div className="modal-field">
+            <label>Select Brand</label>
+            <div className="radio-group">
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  value="Khaadi"
+                  checked={selectedBrand === "khaadi"}
+                  onChange={handleBrandChange}
+                />
+                Khaadi
+              </label>
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  value="Maria B"
+                  checked={selectedBrand === "Maria B"}
+                  onChange={handleBrandChange}
+                />
+                Maria B
+              </label>
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  value="Gul Ahmad"
+                  checked={selectedBrand === "Gul Ahmad"}
+                  onChange={handleBrandChange}
+                />
+                Gul Ahmad
+              </label>
+              
+            </div>
+          </div>
+
           <div className="modal-field">
             <label>Choose File</label>
             <input type="file" id="fileInput" />

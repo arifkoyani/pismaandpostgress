@@ -34,6 +34,7 @@ export default function BasicTable() {
         description: product.description,
         image: `http://localhost:5000/${product.image}`,
         category: product.category,
+        brand: product.brand
       }));
       setProductList(productList);
     } catch (error) {
@@ -86,39 +87,13 @@ export default function BasicTable() {
       },
     },
     {
-        name: "actions", // Custom column for Edit and Delete buttons
-        label: "Actions",
-        options: {
-          filter: false,
-          sort: false,
-          customBodyRender: (value, tableMeta) => {
-            const productId = tableMeta.rowData[7]; // Assuming productId is in the 7th column
-            return (
-              <div>
-                <button
-                  style={{
-                    background: "green",
-                    color: "white",
-                    marginRight: "5px",
-                  }}
-                  onClick={() => handleEdit(productId)}
-                >
-                  Edit
-                </button>
-                <button
-                  style={{
-                    background: "red",
-                    color: "white",
-                  }}
-                  onClick={() => handleDelete(productId)}
-                >
-                  Delete
-                </button>
-              </div>
-            );
-          },
-        },
-    }
+      name: "brand",
+      label: "Brand",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
   ];
 
   const options = {

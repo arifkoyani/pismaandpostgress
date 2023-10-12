@@ -28,14 +28,14 @@ router.get("/", async (req, res)=>{
 
 router.post("/:id", async (req, res) => {
     try {
-      const productId = req.params._id;
+      const productId = req.params.id;
       // Find the document by its ID in the source collection
-      const product = await Product.findById({productId});
+      const product = await Product.findOn(productId);
       console.log(product)
   
-      if (!product) {
-        return res.status(404).json({ message: "Document not found in the source collection." });
-      }
+    //   if (!product) {
+    //     return res.status(404).json({ message: "Document not found in the source collection." });
+    //   }
   
       // Create a new document in the target collection
       await Wishlist.create(product);

@@ -30,7 +30,7 @@ const ProductSchema = new mongoose.Schema({
         
     },
     brand:{
-        type: Number
+        type: String
     }
 
 },

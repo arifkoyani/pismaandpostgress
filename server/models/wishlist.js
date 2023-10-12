@@ -29,7 +29,7 @@ const WishlistSchema = new mongoose.Schema({
         type: String,
         
     },
-    brand:{
+    store:{
         type: Number
     }
 

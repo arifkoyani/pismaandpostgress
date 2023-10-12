@@ -19,7 +19,7 @@ const upload = multer({ storage: storage });
       return res.status(400).send('No file uploaded.');
     }
   
-    const { title, price, description, category } = req.body;
+    const { title, price, description, category,brand } = req.body;
     const image = 'uploads/' + req.file.filename;
   
     const product = new Product({
@@ -27,7 +27,8 @@ const upload = multer({ storage: storage });
         price,
         description,
         image,
-        category
+        category,
+        brand
       });
 
       await product.save();

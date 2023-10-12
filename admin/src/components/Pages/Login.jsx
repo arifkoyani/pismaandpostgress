@@ -8,7 +8,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState("admin@dollarwala.com");
+  const [email, setEmail] = useState("admin@off.com");
   const [password, setPassword] = useState("12345678");
   const [emailErr, setEmailError] = useState("");
   const [passErr, setPassError] = useState("");
