@@ -15,10 +15,10 @@ const ProductDetailScreen = ({ route, navigation }) => {
 
   const handleWishlist = async () => {
     try {
-      // Send a request to your server to add/remove the product from the wishlist.
       const response = await axios.post(`http://localhost:5000/api/wishlist/${productId}`);
+      console.log(response)
       if (response.status === 200) {
-        setIsWishlist(!isWishlist); // Toggle the wishlist state
+        setIsWishlist(!isWishlist);
       }
     } catch (error) {
       console.error("Error adding to wishlist:", error);
