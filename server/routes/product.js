@@ -114,19 +114,16 @@ router.post("/wishlist/:id", async (req, res)=>{
         category: product.category,
         brand:product.brand
       });
-  
+
       await wishlistItem.save();
   
   }catch(err){
-     res.status(500).json(err)  
+    res.status(500).json(err)  
   }
 });
 
-
-
-
 //GET All 
-
+41
 router.get("/", async (req, res)=>{
     const qNew = req.query.new;
     const qCategory = req.query.category;

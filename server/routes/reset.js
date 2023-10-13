@@ -25,9 +25,7 @@ router.post("/", async(req, res) => {
     console.log( user.resetTokenExpiration),
     await user.save();
 
-    // Send password reset email
     const transporter = nodemailer.createTransport({
-      // Configure your email provider details here
       service: "gmail",
       auth: {
         user: "marwakhalid558@gmail.com",

@@ -26,7 +26,7 @@ export default function PlaceOrder({ navigation }) {
             (total, item) => total + item.price * item.quantity,
             0
           ),
-          brandName: state.cart.items[0].brand,
+          brandName: state.cart.items[0],
           paymentMethod:card,
         })
         .then((response) => {
@@ -49,7 +49,7 @@ export default function PlaceOrder({ navigation }) {
       <Text style={styles.label}>Customer Address:</Text>
       <Text style={styles.text}>{state.user.user.address}</Text>
       <Text style={styles.label}>Brand Name:</Text>
-      <Text style={styles.text}>{state.cart.items[0].kitchen.fullName}</Text>
+      <Text style={styles.text}>{state.cart.items[0]}</Text>
       <Text style={styles.label}>Total Price:</Text>
       <Text style={styles.text}>
         $
