@@ -30,7 +30,7 @@ const SignInPage = ({navigation}) => {
 
 
     try {
-      const res = await axios.post("http://localhost:5000/api/users/login", data);
+      const res = await axios.post("http://192.168.18.30:5000/api/users/login", data);
       dispatch(login(res.data));
 
       await AsyncStorage.setItem("userId", res.data.userId);

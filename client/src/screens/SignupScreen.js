@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TextInput, Button,TouchableOpacity } from "react-native";
 import axios from "axios";
 import CheckBox from 'expo-checkbox';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesome } from '@expo/vector-icons';
 
 const RegisterPage = ({navigation}) => {
   const [username, setUsername] = useState("");
@@ -14,28 +14,29 @@ const RegisterPage = ({navigation}) => {
   const [rememberMe, setRememberMe] = useState(false);
 
     const handleRegistration = async() => {
+
       if(username.length < 3){
         setNameErr("Name should be at least 3 characters long");
-        return;
-        }
+        return
+      } else setNameErr("");
         if(!email){
           setEmailErr("Email is required");
           return;
-        }
+        }else setEmailErr("")
         if(!email.includes("@") || !email.includes(".")){
           setEmailErr(`Email must include "@" and a "."`);
           return;
-        }
+        }else setEmailErr("")
       
         if(!password){
           setPasswordErr("Password is required.");
           return;
-          }
+          }else setPasswordErr("");
     
         if(password.length < 8){
           setPasswordErr("Password should be at least 8 characters long");
           return;
-          }
+          }else setPasswordErr("");
     
         const customerData = {
           username,
@@ -44,7 +45,7 @@ const RegisterPage = ({navigation}) => {
         };
     
         try{
-          const response = await axios.post("http://localhost:5000/api/users/register", customerData)
+          const response = await axios.post("http://192.168.18.30:5000/api/users/register", customerData)
            console.log(response)
            navigation.navigate("Signin")
         }catch(error){
@@ -69,6 +70,7 @@ const RegisterPage = ({navigation}) => {
           value={username}
         />
         <View style={styles.line}></View>
+        <Text style={styles.err}>{usernameErr}</Text>
 
         <Text style={styles.label}>Password:</Text>
         <TextInput
@@ -78,6 +80,7 @@ const RegisterPage = ({navigation}) => {
           secureTextEntry={true}
         />
         <View style={styles.line}></View>
+        <Text style={styles.err}>{passwordErr}</Text>
 
         <Text style={styles.label}>Email Address:</Text>
         <TextInput
@@ -87,6 +90,7 @@ const RegisterPage = ({navigation}) => {
           keyboardType="email-address"
         />
         <View style={styles.line}></View>
+        <Text style={styles.err}>{emailErr}</Text>
 
         <View style={styles.rememberMeContainer}>
           
@@ -99,8 +103,13 @@ const RegisterPage = ({navigation}) => {
         </View>
 
     <TouchableOpacity style={styles.fbbutton}>
-    <FontAwesomeIcon icon={{name: 'fa-facebook'}} style={styles.facebookIcon} />
-      <Text style={styles.fbbuttonText}>Facebook</Text>
+      <FontAwesome name="facebook" size={18} color="#FFFFFF" backgroundColor="#1877f2" style={styles.icon} />
+      <Text color="blue" style={styles.fbbuttonText}>Facebook</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.googlebutton}>
+      <FontAwesome name="google" size={18} color="#FFFFFF" backgroundColor="red" style={styles.icon} />
+      <Text color="red" style={styles.googlebuttonText} >Google</Text>
     </TouchableOpacity>
     
     <TouchableOpacity
@@ -129,6 +138,17 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height:"100%"
   },
+  err:{
+    color:"red"
+  },
+  icon: {
+    width: 25,
+    height: 25,
+    borderRadius: 13,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding:4,
+  },
   loginText: {
     marginTop: 30,
     textAlign: "center",
@@ -139,7 +159,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: 400,
     alignSelf: "flex-start",
-    marginTop: 22,
+    marginTop: 10,
     marginLeft: 4,
   },
   title: {
@@ -164,11 +184,13 @@ const styles = StyleSheet.create({
     height: 1,
   },
   button: {
+    marginTop:20,
+    marginLeft:75,
     backgroundColor: "white",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    width: 150,
+    width: 180,
     shadowColor: "#BD8853",
     shadowOffset: {
       width: 0,
@@ -176,7 +198,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 3, 
+    elevation: 5, 
   },
 
   buttonText: {
@@ -210,10 +232,29 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
+
+  googlebutton: {
+    marginTop:10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderColor: "#EA4335", 
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
   fbbuttonText: {
     fontSize: 16,
-    color: '#1877f2', // Blue text color
     marginLeft: 10,
+    color:"#1877f2",
+    fontWeight:"bold" // Spacing between icon and text
+  },
+  googlebuttonText: {
+    fontSize: 16,
+    marginLeft: 10,
+    color:"#EA4335",
     fontWeight:"bold" // Spacing between icon and text
   },
   // image1: {
@@ -238,46 +279,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     marginLeft: 135,
     aspectRatio: 1,
-  },
-  view1: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    border: 1,
-    backgroundColor: "#FFF",
-    alignSelf: "flex-start",
-    display: "flex",
-    marginTop: 14,
-    width: 800,
-    maxWidth: 800,
-    paddingTop: 14,
-    paddingRight: 20,
-    paddingBottom: 14,
-    paddingLeft: 20,
-    flexDirection: "column",
-  },
-  view2: {
-    alignItems: "flex-start",
-    alignSelf: "center",
-    display: "flex",
-    width: "100%",
-    gap: 4,
-  },
-  image3: {
-    position: "relative",
-    display: "flex",
-    width: 22,
-    flexShrink: 0,
-    flexDirection: "column",
-    aspectRatio: 1,
-  },
-  view3: {
-    color: "#4267B2",
-    fontFeatureSettings: "'clig' off, 'liga' off",
-    fontSize: 17,
-    fontWeight: 600,
-    letterSpacing: -0.408,
-    alignSelf: "stretch",
   },
 });
 
