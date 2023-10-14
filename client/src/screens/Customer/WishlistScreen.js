@@ -22,7 +22,7 @@ const WishlistScreen = ({ route, navigation }) => {
   const fetchProducts = async () => {
     try {
       // Fetch products of the selected brand using the brandId
-      const response = await axios.get(`http://localhost:5000/api/wishlist/`);
+      const response = await axios.get(`https://off-api.vercel.app/api/wishlist/`);
       setProducts(response.data);
     } catch (error) {
       console.log("Error fetching products:", error);
@@ -35,7 +35,7 @@ const WishlistScreen = ({ route, navigation }) => {
 
   const renderProductCard = ({ item }) => (
     <TouchableOpacity style={styles.productCard} onPress={() => {handleProductPress(item._id)}}>
-      <Image source={{ uri: `http://localhost:5000/${item.image }`}} style={styles.productImage} />
+      <Image source={{ uri: `https://off-api.vercel.app/${item.image }`}} style={styles.productImage} />
       <Text style={styles.productName}>{item.title}</Text>
       <Text style={styles.productPrice}>Price: Rs.{item.price}</Text>
     </TouchableOpacity>

@@ -4,6 +4,7 @@ import axios from "axios";
 import { FontAwesome } from "@expo/vector-icons";
 import { addToCart } from "../../features/BasketSlice";
 import { useDispatch } from "react-redux";
+import { ScrollView } from "react-native";
 
 const ProductDetailScreen = ({ route, navigation }) => {
   const { productId } = route.params;
@@ -16,7 +17,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 
   const handleWishlist = async () => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/wishlist/${productId}`);
+      const response = await axios.post(`https://off-api.vercel.app/api/wishlist/${productId}`);
       if (response.status === 200) {
         setIsWishlist(!isWishlist);
       }
@@ -28,7 +29,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
+        const response = await axios.get(`https://off-api.vercel.app/api/products/${productId}`);
         setProduct(response.data);
       } catch (error) {
         console.error("Error fetching product details:", error);
@@ -54,7 +55,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={{ uri: `http://localhost:5000/${product.image}` }} style={styles.productImage}>
+      <ImageBackground source={{ uri: `${product.image}` }} style={styles.productImage}>
         <TouchableOpacity style={styles.wishlistIcon} onPress={handleWishlist}>
           <FontAwesome name={isWishlist ? "heart" : "heart-o"} size={24} color="red" />
         </TouchableOpacity>
@@ -63,6 +64,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
         <Text style={styles.productName}>{product.title}</Text>
         <Text style={styles.productPrice}>Price: Rs.{product.price}</Text>
       </View>
+      <ScrollView>
       <View style={styles.sizeRow}>
         <Text>Select Size:</Text>
         <View style={styles.sizeButtons}>
@@ -98,13 +100,12 @@ const ProductDetailScreen = ({ route, navigation }) => {
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     </View>
   );
 };
 
-// Add these new styles for quantity selection
 const styles = StyleSheet.create({
-  // ... (existing styles)
 
   quantityRow: {
     flexDirection: "row",
@@ -125,7 +126,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 500, // Adjust the height to fit your design
     resizeMode: "cover",
-    position: "relative", // Enable positioning
+    position: "relative", 
+    borderRadius:10
   },
   wishlistIcon: {
     position: "absolute",
@@ -177,6 +179,7 @@ const styles = StyleSheet.create({
   },
   productDescription: {
     fontSize: 16,
+    color:"grey"
   },
   buttonRow: {
     flexDirection: "row",
@@ -184,17 +187,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    backgroundColor: "white", // White background
+    backgroundColor: "white",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    justifyContent: "center", // Center button within its row
-    backgroundColor: '#FFF',
-    boxShadow: "0px 4px 4px 0px #BD8853",
+    width: 150,
+    shadowColor: "#BD8853",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 3, 
   },
   buttonText: {
     fontSize: 16,
     fontWeight: "bold",
+    textAlign:"center"
   },
 });
 

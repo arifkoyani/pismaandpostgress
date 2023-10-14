@@ -5,7 +5,24 @@ import { removeFromCart } from '../../features/BasketSlice';
 import Icon from "react-native-vector-icons/MaterialIcons";
 import axios from "axios";
 
-const CartScreen = ({ navigation }) => {
+const CartScreen = ({ route,navigation }) => {
+  
+  const [cardNumber, setCardNumber] = useState('');
+
+  const [address, setAddress] = useState(''); // Address state in the CartScreen
+
+  useEffect(() => {
+    // Check if an updated address is provided in the route parameters
+    if (route.params && route.params.address) {
+      // Update the address in the CartScreen
+      setAddress(route.params.address);
+    }
+    if (route.params && route.params.cardNumber) {
+      // Update the address in the CartScreen
+      setCardNumber(route.params.cardNumber);
+    }
+  }, [route.params]);
+
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const [cartItems, setCartItems] = useState(state.cart.items);
@@ -26,6 +43,44 @@ const CartScreen = ({ navigation }) => {
       setQuantity(quantity - 1);
     }
   };
+  const formatCardNumber = (cardNumber) => {
+    // Remove spaces and hyphens, if any
+    const cleanedCardNumber = cardNumber.replace(/[\s-]/g, '');
+  
+    // Use regex to split the number into groups of 4 digits
+    const formattedCardNumber = cleanedCardNumber.match(/(\d{1,4})/g).join(' ');
+  
+    return formattedCardNumber;
+  };
+  
+  const handleSubmit = () =>{
+    console.log(state.cart.items)
+    console.log(state.cart.items[0].brand)
+
+    if (!cardNumber || !address) {
+      alert('Please fill in all address and card details.');
+      return;
+    }
+    
+    axios
+    .post("https://off-api.vercel.app/api/orders/", {
+        customerName: state.user.user.username, // Use the customer's name
+        address: address,
+        cartItems: state.cart.items,
+        status: "Processing",
+        totalPrice: state.cart.items.reduce(
+            (total, item) => total + item.price * item.quantity,
+            0
+        ),
+        brandName: state.cart.items[0].brand, // Assuming you want the brand of the first item
+        paymentMethod: "card",
+    })
+    .then((response) => {
+        console.log(response.data);
+    })
+    .catch((error) => console.log(error));
+
+  };
 
   return (
     <View style={styles.container}>
@@ -36,10 +91,10 @@ const CartScreen = ({ navigation }) => {
         <View>
           {cartItems.map((item) => (
             <View key={item._id} style={styles.cartItem}>
-              <Image source={{ uri: `http://localhost:5000/${item.image}` }} style={styles.productImage} />
+              <Image source={{ uri: `${item.image}` }} style={styles.productImage} />
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.title}</Text>
-                <Text style={styles.itemPrice}>Price: ${item.price}</Text>
+                <Text style={styles.itemPrice}>Rs. {item.price}</Text>
                 <View style={styles.quantityContainer}>
                   
                   <View style={styles.quantityButtons}>
@@ -63,7 +118,7 @@ const CartScreen = ({ navigation }) => {
                 style={styles.deleteButton}
                 onPress={() => deleteItem(item.id)}
               >
-                <Icon name="delete" size={28} color="red" />
+                <Icon name="delete" size={28} color="grey" />
               </TouchableOpacity>
             </View>
           ))}
@@ -71,28 +126,61 @@ const CartScreen = ({ navigation }) => {
             Total Items:
             {cartItems.reduce((total, item) => total + item.quantity, 0)}
           </Text>
+
+          {/* Delivery Address */}
+      <Text style={styles.subheading}>Delivery Address</Text>
+      <TouchableOpacity
+        style={styles.option}
+        onPress={() => navigation.navigate('AddAddress')}
+      >
+        {address ? <Text> {address}</Text>  : <Text>Add/Select Address</Text>}
+      </TouchableOpacity>
+
+      {/* Payment Method */}
+      <Text style={styles.subheading}>Payment Method</Text>
+      <TouchableOpacity
+        style={styles.option}
+        onPress={() => navigation.navigate('AddCard')}
+      >
+        {cardNumber ? <Text> {formatCardNumber(cardNumber)}</Text>  : <Text>Add Payment Card</Text>}
+      </TouchableOpacity>
+
+      {/* Order Info */}
+      <Text style={styles.subheading}>Order Info</Text>
+      <View style={styles.orderInfo}>
+          <Text style={styles.ordertext} >Subtotal</Text>
+          <TouchableOpacity >
+            <Text style={styles.ordertext2}>{state.cart.items.reduce(
+              (total, item) => total + item.price * item.quantity,
+              0
+            )}</Text>
+          </TouchableOpacity>
+      </View>
+      <View style={styles.orderInfo}>
+          <Text style={styles.ordertext} >Shiiping Cost</Text>
+          <TouchableOpacity >
+            <Text style={styles.ordertext2}>Rs 200</Text>
+          </TouchableOpacity>
+      </View>
+      <View style={styles.orderInfo}>
+          <Text style={styles.ordertext} >Total</Text>
+          <TouchableOpacity >
+            <Text style={styles.ordertext2}>{state.cart.items.reduce(
+              (total, item) => (total + item.price * item.quantity) +200,
+              0
+            )}</Text>
+          </TouchableOpacity>
+      </View>
+
           <TouchableOpacity
-            style={styles.addToCartButton}
-            onPress={() => navigation.navigate("PlaceOrder")}
+            style={styles.button}
+            onPress={handleSubmit}
           >
-            <Text style={styles.addToCartButtonText}>Place Order</Text>
+            <Text style={styles.addToCartButtonText}>Checkout</Text>
           </TouchableOpacity>
         </View>
       )}
 
-      <TouchableOpacity
-        style={styles.addToCartButton}
-        onPress={() => navigation.navigate("AddAddress")}
-      >
-        <Text style={styles.addToCartButtonText}>Add Delivery Address</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.addToCartButton}
-        onPress={() => navigation.navigate("AddCard")}
-      >
-        <Text style={styles.addToCartButtonText}>Add Card Information</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -108,6 +196,25 @@ const styles = StyleSheet.create({
     height: 100,
     marginBottom: 8,
     borderRadius: 10,
+    resizeMode:"contain"
+  },
+  orderInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+    marginTop: 10,
+  },
+  ordertext: {
+    fontSize:17,
+    fontWeight:"bold",
+    color:"grey",
+  },
+  ordertext2: {
+    marginRight:25,
+    fontSize:17,
+    fontWeight:"bold",
+    color:"black",
   },
   title: {
     fontSize: 24,
@@ -120,6 +227,21 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 16,
   },
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  subheading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 16,
+  },
+  option: {
+    padding: 12,
+    backgroundColor: '#F5F5F5',
+    marginVertical: 8,
+  },
   cartItem: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -127,17 +249,18 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: "#FEFEFE",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 3,
   },
   itemInfo: {
     flex: 1,
     marginRight: 16,
+    marginLeft:20
   },
   itemName: {
     fontSize: 16,
@@ -163,8 +286,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   deleteButton: {
-    width: 60,
+    width: 40,
     alignItems: "center",
+    marginTop:70
   },
   totalText: {
     fontSize: 18,
@@ -172,16 +296,27 @@ const styles = StyleSheet.create({
     marginTop: 16,
     textAlign: "center",
   },
-  addToCartButton: {
-    backgroundColor: "#09605e",
-    borderRadius: 8,
-    paddingVertical: 8,
-    alignItems: "center",
-  },
   addToCartButtonText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#fff",
+    textAlign:"center"
+  },
+  button: {
+    backgroundColor: "white",
+    paddingVertical: 10,
+    marginTop:40,
+    marginLeft:90,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    width: 200,
+    shadowColor: "#BD8853",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 3, 
   },
 });
 

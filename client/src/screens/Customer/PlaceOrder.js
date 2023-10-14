@@ -16,7 +16,7 @@ export default function PlaceOrder({ navigation }) {
   const handleConfirmOrder = () => {
     if (state.cart.items.length > 0) {
       axios
-        .post("http://localhost:5000/api/orders/", {
+        .post("https://off-api.vercel.app/api/orders/", {
           customerName: state.user.user.name,
           address: state.user.user.address,
           phoneNumber:state.user.user.phoneNumber,

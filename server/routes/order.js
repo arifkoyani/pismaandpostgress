@@ -7,7 +7,7 @@ const router = require("express").Router();
 
 //Create
 
-router.post("/" , verifyToken, async (req,res)=>{
+router.post("/" , async (req,res)=>{
      const newOrder = new Order(req.body);
 
      try{

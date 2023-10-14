@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity,Image } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 
 const AddCardScreen = ({ navigation }) => {
@@ -10,7 +10,6 @@ const AddCardScreen = ({ navigation }) => {
   const [cvv, setCVV] = useState('');
 
   const handlePayment = () => {
-    if (paymentMethod === 'card') {
       if (!cardOwner || !cardNumber || !expiryDate || !cvv) {
         // Handle missing card information
         alert('Please fill in all card details.');
@@ -32,9 +31,9 @@ const AddCardScreen = ({ navigation }) => {
         return;
       }
 
-    } else if (paymentMethod === 'cash') {
-      navigation.navigate('PlaceOrder');
-    }
+      navigation.navigate('CartScreen', {
+        cardNumber: cardNumber,
+      });
   };
 
   const isCardNumberValid = (cardNumber) => {
@@ -57,67 +56,55 @@ const AddCardScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Payment Method</Text>
-      <View style={styles.radioButtons}>
-        <View style={styles.radioButton}>
-          <RadioButton
-            value="card"
-            status={paymentMethod === 'card' ? 'checked' : 'unchecked'}
-            onPress={() => setPaymentMethod('card')}
+      <Text style={styles.title}>Add Card</Text>
+      <View style={styles.imageCard}>
+          <Image
+            source= {require('../../images/card.png')}
           />
-          <Text>Card</Text>
-        </View>
-        <View style={styles.radioButton}>
-          <RadioButton
-            value="cash"
-            status={paymentMethod === 'cash' ? 'checked' : 'unchecked'}
-            onPress={() => setPaymentMethod('cash')}
-          />
-          <Text>Cash on Delivery</Text>
-        </View>
       </View>
-
-      {paymentMethod === 'card' && (
-        <View>
+        <View style={styles.cardDetails}>
           <Text style={styles.label}>Card Owner</Text>
           <TextInput
             style={styles.input}
             value={cardOwner}
+            placeholder='Zahra Batool'
             onChangeText={(text) => setCardOwner(text)}
           />
 
-          <Text style={styles.label}>Card Number (XXXX XXXX XXXX XXXX)</Text>
+          <Text style={styles.label}>Card Number</Text>
           <TextInput
             style={styles.input}
             value={cardNumber}
+            placeholder='5254 7634 8734 7690'
             onChangeText={(text) => setCardNumber(text)}
           />
 
           <View style={styles.row}>
             <View style={styles.column}>
-              <Text style={styles.label}>Expiry Date (MM/YYYY)</Text>
+              <Text style={styles.label}>EXP</Text>
               <TextInput
                 style={styles.input}
+                placeholder='02/25'
                 value={expiryDate}
                 onChangeText={(text) => setExpiryDate(text)}
               />
             </View>
 
             <View style={styles.column}>
-              <Text style={styles.label}>CVV (XXX)</Text>
+              <Text style={styles.label}>CVV</Text>
               <TextInput
                 style={styles.input}
                 value={cvv}
+                placeholder='776'
                 onChangeText={(text) => setCVV(text)}
               />
             </View>
           </View>
         </View>
-      )}
 
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.button} onPress={handlePayment}>
-          <Text style={styles.buttonText}>Make Payment</Text>
+          <Text style={styles.buttonText}>Add Card</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -129,6 +116,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#f9f9f9',
+  },
+  cardDetails:{
+    marginTop:120,
   },
   title: {
     fontSize: 24,
@@ -151,31 +141,45 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
     borderRadius: 8,
     padding: 8,
+    backgroundColor:"#F5F6FA",
     marginBottom: 16,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  imageCard:{
+    width:"100%",
+    height:100,
+    resizeMode:"contain",
+    marginLeft:30
+  },
   column: {
     flex: 1,
+    marginRight:40
   },
   button: {
-    backgroundColor: "white", // White background
+    backgroundColor: "white",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    justifyContent: "center", // Center button within its row
-    backgroundColor: '#FFF',
-    boxShadow: "0px 4px 4px 0px #BD8853",
+    width: 150,
+    shadowColor: "#BD8853",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.75,
+    shadowRadius: 4,
+    elevation: 3, 
   },
+
   buttonText: {
     fontSize: 16,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    textAlign:"center"
   },
   buttonRow: {
     flexDirection: "row",

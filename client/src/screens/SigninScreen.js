@@ -30,10 +30,11 @@ const SignInPage = ({navigation}) => {
 
 
     try {
-      const res = await axios.post("http://192.168.18.30:5000/api/users/login", data);
-      dispatch(login(res.data));
+      const response = await axios.post("https://off-api.vercel.app/api/users/login", data);
+      dispatch(login(response.data));
 
-      await AsyncStorage.setItem("userId", res.data.userId);
+      await AsyncStorage.setItem("userId", response.data.user.id);
+      console.log(response.data.user.id)
 
       navigation.navigate("CustomerScreen");
     }catch(error){
