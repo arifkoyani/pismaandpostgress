@@ -45,7 +45,7 @@ const RegisterPage = ({navigation}) => {
         };
     
         try{
-          const response = await axios.post("http://192.168.18.30:5000/api/users/register", customerData)
+          const response = await axios.post("https://off-api.vercel.app/api/users/register", customerData)
            console.log(response)
            navigation.navigate("Signin")
         }catch(error){
