@@ -22,8 +22,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 200, // Adjust the width as needed
-    height: 200, // Adjust the height as needed
+    marginBottom:50,
+    width: 150, // Adjust the width as needed
+    height: 150, // Adjust the height as needed
   },
 });
 

@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 10,
     justifyContent: "center", // Center button within its row
-    borderRadius: "10px",
     backgroundColor: '#FFF',
     boxShadow: "0px 4px 4px 0px #BD8853",
   },
