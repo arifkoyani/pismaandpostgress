@@ -7,30 +7,31 @@ const ReviewsPage = ({ route }) => {
   const [reviews, setReviews] = useState([]);
   const [reviewText, setReviewText] = useState('');
   const [starRating, setStarRating] = useState(0);
+  const [customerName, setCustomerName] = useState(0);
 
-  useEffect(() => {
-    fetchReviews();
-  }, [])
+  // useEffect(() => {
+  //   fetchReviews();
+  // }, [])
 
-  const fetchReviews = async () => {
-    try {
-      console.log("hi")
-      console.log(kitchenId)
-      const response = await axios.get(
-        `http://localhost:3500/reviews/${kitchenId}`
-      );
-      const reviewsData = response.data;
-      setReviews(reviewsData);
-    } catch (error) {
-      console.log('Error fetching reviews:', error);
-    }
-  };
+  // const fetchReviews = async () => {
+  //   try {
+  //     console.log("hi")
+  //     console.log(kitchenId)
+  //     const response = await axios.get(
+  //       `http://localhost:3500/reviews/${productId}`
+  //     );
+  //     const reviewsData = response.data;
+  //     setReviews(reviewsData);
+  //   } catch (error) {
+  //     console.log('Error fetching reviews:', error);
+  //   }
+  // };
 
   const handleReviewSubmit = async () => {
     try {
 
       const data = {
-        kitchenId:kitchenId,
+        productId:"7878788888hf",
         customerName:customerName,
         rating: starRating,
         review: reviewText,
@@ -38,8 +39,7 @@ const ReviewsPage = ({ route }) => {
       console.log(customerName)
 
   
-      await axios.post("http://localhost:3500/reviews", data);
-      fetchReviews(); 
+      await axios.post("https://off-api.vercel.app/api/reviews", data);
       setReviewText('');
       setStarRating(0);
     } catch (error) {
@@ -71,8 +71,8 @@ const ReviewsPage = ({ route }) => {
       <TextInput
           style={styles.reviewNameInput}
           placeholder="Type your name"
-          value={reviewText}
-          onChangeText={(text) => setReviewText(text)}
+          value={customerName}
+          onChangeText={(text) => setCustomerName(text)}
         />
 
         <Text style={styles.addReviewTitle}>How was your experience</Text>

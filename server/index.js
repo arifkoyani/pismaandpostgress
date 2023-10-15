@@ -13,6 +13,7 @@ const paymentRoute = require("./routes/payment");
 const brandsRoute = require('./routes/brands');
 const wishlistRoute = require('./routes/wishlist')
 const resetRoute = require('./routes/reset')
+const reviewRoute= require('./routes/reviews')
 
 dotenv.config();
 
@@ -32,8 +33,9 @@ app.use("/api/orders", orderRoute);
 app.use("/api/reviews", reviewRoute);
 app.use("/api/payments", paymentRoute);
 app.use("/api/brands", brandsRoute);
-app.use("/api/wishlist", wishlistRoute)
-app.use('/api/reset', resetRoute)
+app.use("/api/wishlist", wishlistRoute);
+app.use('/api/reset', resetRoute);
+app.use("/api/reviews",reviewRoute);
 
 app.use(express.static("../client"));
 app.use('/uploads', express.static('uploads'));
