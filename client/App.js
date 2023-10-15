@@ -12,7 +12,6 @@ import BrandDetail from "./src/screens/Customer/BrandDetail";
 import CartScreen from "./src/screens/Customer/CartScreen";
 import AddAddressScreen from "./src/screens/Customer/AddAddressScreen";
 import AddCardScreen from "./src/screens/Customer/AddCardScreen";
-import PlaceOrder from "./src/screens/Customer/PlaceOrder";
 import OrderPlaced from "./src/screens/Customer/OrderPlaced";
 import CustomerOrder from "./src/screens/Customer/CustomerOrders"
 import ReviewPage from "./src/screens/Customer/ReviewPage";
@@ -34,7 +33,6 @@ function App() {
         <Stack.Screen name='WishlistScreen' component={WishlistScreen} />
         <Stack.Screen name='OrderPlaced' component={OrderPlaced} />
         <Stack.Screen name='Main' component={Splash} />
-          <Stack.Screen name='PlaceOrder' component={PlaceOrder} />
           <Stack.Screen name='Signup' component={SignupScreen} />
           <Stack.Screen name='Signin' component={SigninScreen} />
           <Stack.Screen name='Sidebar' component={Sidebar} />

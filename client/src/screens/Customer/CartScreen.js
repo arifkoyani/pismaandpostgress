@@ -69,7 +69,7 @@ const CartScreen = ({ route,navigation }) => {
     }
     
     axios
-    .post("https://localhost:5000/api/orders/", {
+    .post("http://off-api.vercel.app/api/orders/", {
         customerName: state.user.user.user.username, 
         products: state.cart.items.map(item => ({
           title: item.title,
@@ -87,6 +87,7 @@ const CartScreen = ({ route,navigation }) => {
        }  } )
     .then((response) => {
         console.log(response.data);
+        navigation.navigate("OrderPlaced")
     })
     .catch((error) => console.log(error));
 

@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 
 const BrandDetailScreen = ({ route, navigation }) => {
-  const brand = route.params;
+  const {image} = route.params;
 
   console.log(route.params)
   const [products, setProducts] = useState([]);
@@ -29,7 +29,6 @@ const BrandDetailScreen = ({ route, navigation }) => {
     }
   };
   const handleProductPress = async (productId) => {
-    // Navigate to the product detail screen and pass the product ID as a parameter
     navigation.navigate("ProductDetail", { productId });
   };
 
@@ -43,6 +42,7 @@ const BrandDetailScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.imageBrand}>{{ uri: image }}</Image>
       <Text style={styles.brandName}>{products.length} Products in Stock</Text>
       <FlatList
         data={products}
@@ -71,20 +71,16 @@ const styles = StyleSheet.create({
   productCard: {
     flex: 1,
     borderRadius: 8,
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     margin: 8,
     padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
   },
   productImage: {
     width: "100%",
-    height: 160,
+    height: 200,
     borderRadius: 8,
     marginBottom: 8,
+    resizeMode:"contain"
   },
   productName: {
     fontSize: 16,

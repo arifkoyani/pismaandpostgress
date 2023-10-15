@@ -5,7 +5,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function OrderPlaced({ navigation }) {
 
   const handleGoBack = () => {
-    // Navigate back to the home screen
     navigation.navigate("CustomerScreen");
   };
 
