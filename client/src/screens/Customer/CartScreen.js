@@ -69,8 +69,8 @@ const CartScreen = ({ route,navigation }) => {
         customerName: state.user.user.username, // Use the customer's name
         address: address,
         products: state.cart.items.map(item => ({
-          productId: item._id,
-          quantity: item.quantity,
+          title: item.title,
+          quantity: item.quantity
         })),
         status: "Processing",
         amount: state.cart.items.reduce(
@@ -78,7 +78,9 @@ const CartScreen = ({ route,navigation }) => {
             0
         ),
         brand: state.cart.items[0].brand, // Assuming you want the brand of the first item
-    })
+    },{headers: {
+      'Content-Type': 'application/json'
+       }  } )
     .then((response) => {
         console.log(response.data);
     })
