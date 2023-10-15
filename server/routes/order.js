@@ -70,7 +70,7 @@ res.status(200).json(orders);
 
 //Get Monthly Income
 
-router.get("/income", verifyTokenAndAdmin, async (req,res)=>{
+router.get("/income",async (req,res)=>{
    const date = new Date();
    const lastMonth = new Date(date.setMonth(date.getMonth()-1));
    const previousMonth = new Date(new date.setMonth(lastMonth.getMonth() - 1)); 

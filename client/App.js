@@ -28,7 +28,7 @@ function App() {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <Stack.Navigator options={{ headerShown: false }} initialRouteName="Review">
+        <Stack.Navigator options={{ headerShown: false }} initialRouteName="Main">
         <Stack.Screen name='BrandDetail' component={BrandDetail} />
 
         <Stack.Screen name='WishlistScreen' component={WishlistScreen} />

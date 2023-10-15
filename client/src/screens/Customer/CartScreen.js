@@ -54,13 +54,14 @@ const CartScreen = ({ route,navigation }) => {
   };
   
   const handleSubmit = () =>{
+   
+    console.log(state.cart.items[0].brand)
+    console.log(address)
+    console.log(state.user.user.user.username)
     console.log(state.cart.items.map(item => ({
       title: item.title,
       quantity: item.quantity
     })))
-    console.log(state.cart.items[0].brand)
-    console.log(address)
-    console.log(state.user.user.user.username)
 
     if (!cardNumber || !address) {
       alert('Please fill in all address and card details.');
@@ -68,8 +69,8 @@ const CartScreen = ({ route,navigation }) => {
     }
     
     axios
-    .post("https://off-api.vercel.app/api/orders/", {
-        customerName: state.user.user.user.username, // Use the customer's name
+    .post("https://localhost:5000/api/orders/", {
+        customerName: state.user.user.user.username, 
         products: state.cart.items.map(item => ({
           title: item.title,
           quantity: item.quantity
@@ -80,7 +81,7 @@ const CartScreen = ({ route,navigation }) => {
             0
         ),
         address: address,
-        brand: state.cart.items[0].brand, // Assuming you want the brand of the first item
+        brand: state.cart.items[0].brand, 
     },{headers: {
       'Content-Type': 'application/json'
        }  } )
@@ -166,7 +167,7 @@ const CartScreen = ({ route,navigation }) => {
           </TouchableOpacity>
       </View>
       <View style={styles.orderInfo}>
-          <Text style={styles.ordertext} >Shiiping Cost</Text>
+          <Text style={styles.ordertext} >Shipping Cost</Text>
           <TouchableOpacity >
             <Text style={styles.ordertext2}>Rs 200</Text>
           </TouchableOpacity>
@@ -220,7 +221,7 @@ const styles = StyleSheet.create({
     color:"grey",
   },
   ordertext2: {
-    marginRight:25,
+    marginRight:5,
     fontSize:17,
     fontWeight:"bold",
     color:"black",
@@ -228,7 +229,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 40,
+    marginTop:30,
     textAlign: "center",
   },
   emptyCartText: {
