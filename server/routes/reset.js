@@ -29,7 +29,7 @@ router.post("/", async(req, res) => {
       service: "gmail",
       auth: {
         user: "shabbiralam45524@gmail.com",
-        pass: "oyll drut venp tils        ",
+        pass: "oyll drut venp tils",
       },
     });
 
