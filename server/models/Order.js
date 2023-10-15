@@ -27,6 +27,9 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         default: "pending",
     },
+    brand:{
+        type:String
+    }
 },
 { timestamps: true });
 

@@ -67,7 +67,6 @@ const CartScreen = ({ route,navigation }) => {
     axios
     .post("https://off-api.vercel.app/api/orders/", {
         customerName: state.user.user.username, // Use the customer's name
-        address: address,
         products: state.cart.items.map(item => ({
           title: item.title,
           quantity: item.quantity
@@ -77,6 +76,7 @@ const CartScreen = ({ route,navigation }) => {
             (total, item) => total + item.price * item.quantity,
             0
         ),
+        address: address,
         brand: state.cart.items[0].brand, // Assuming you want the brand of the first item
     },{headers: {
       'Content-Type': 'application/json'
