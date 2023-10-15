@@ -83,20 +83,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    justifyContent:"center",
     backgroundColor:"white"
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 50,
     textAlign: "center",
+    marginTop:50
   },
   logo: {
-    width: 100,
-    height: "141px",
-    bottom: "65px",
-    left: "120px",
+    alignSelf: "flex-start",
+    position: "relative",
+    display: "flex",
+    marginTop: 16,
+    width: 120,
+    height:120,
+    flexShrink: 0,
+    flexDirection: "column",
+    marginLeft: 135,
+    aspectRatio: 1,
   },
   input: {
     height: 40,
@@ -120,11 +126,9 @@ const styles = StyleSheet.create({
     color:"white",
     justifyContent:"center",
     textAlign:"center"
-   
-    
   },
   buttonn: {
-    marginTop: 20,
+    marginTop: 50,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,

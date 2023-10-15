@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet} from "react-native";
 import axios from "axios";
 
 const ForgotPasswordForm = ({navigation,route}) => {
@@ -18,7 +18,10 @@ const ForgotPasswordForm = ({navigation,route}) => {
       .then((response) => {
         setMessage(response.data.message);
         if(response.data.success){
-          navigation.navigate('ForgotPasswordConfirmation',{email})
+          setTimeout(() => {
+            navigation.navigate('ForgotPasswordConfirmation',{email})
+          }, 4000);
+          
         }
       })
       .catch((error) => {
@@ -33,6 +36,7 @@ const ForgotPasswordForm = ({navigation,route}) => {
         style={styles.logo}
       />
       <Text style={styles.title}>Forgot Password</Text>
+      <Text style={styles.label}>Email Address</Text>
       <TextInput
         style={styles.input}
         placeholder="Email Address"
@@ -52,19 +56,31 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "#fff",
-    justifyContent:"center"
   },
   logo: {
-    width: 100,
-    height: "141px",
-    bottom: "65px",
-    left: "120px",
+    alignSelf: "flex-start",
+    position: "relative",
+    display: "flex",
+    marginTop: 16,
+    width: 120,
+    height:120,
+    flexShrink: 0,
+    flexDirection: "column",
+    marginLeft: 135,
+    aspectRatio: 1,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 40,
+    marginTop:60,
+    color:"#BD8853",
     textAlign: "center",
+  },
+  label: {
+    fontSize: 14,
+    marginBottom: 20,
+    fontWeight:"bold"
   },
   input: {
     height: 40,
@@ -86,9 +102,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color:"white",
     justifyContent:"center",
-    textAlign:"center"
-   
-    
+    textAlign:"center" 
   },
   buttonn: {
     marginTop: 20,

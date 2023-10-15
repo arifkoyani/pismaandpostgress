@@ -69,7 +69,7 @@ const CartScreen = ({ route,navigation }) => {
     }
     
     axios
-    .post("http://off-api.vercel.app/api/orders/", {
+    .post("http://192.168.18.30/api/orders/", {
         customerName: state.user.user.user.username, 
         products: state.cart.items.map(item => ({
           title: item.title,

@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 
 const BrandDetailScreen = ({ route, navigation }) => {
-  const {image} = route.params;
+  const image = route.params;
 
   console.log(route.params)
   const [products, setProducts] = useState([]);
@@ -64,8 +64,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-    textAlign: "center",
     marginBottom: 16,
+    marginTop:20
+  },
+  imageBrand:{
+    width:100,
+    height:50,
+    marginLeft:130,
   },
   productCard: {
     flex: 1,
