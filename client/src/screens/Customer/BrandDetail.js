@@ -35,7 +35,7 @@ const BrandDetailScreen = ({ route, navigation }) => {
 
   const renderProductCard = ({ item }) => (
     <TouchableOpacity style={styles.productCard} onPress={() => {handleProductPress(item._id)}}>
-      <Image source={{ uri: `https://off-api.vercel.app/${item.image }`}} style={styles.productImage} />
+      <Image source={{ uri: `${item.image }`}} style={styles.productImage} />
       <Text style={styles.productName}>{item.title}</Text>
       <Text style={styles.productPrice}>Price: Rs.{item.price}</Text>
     </TouchableOpacity>

@@ -54,10 +54,13 @@ const CartScreen = ({ route,navigation }) => {
   };
   
   const handleSubmit = () =>{
-    console.log(state.cart.items)
+    console.log(state.cart.items.map(item => ({
+      title: item.title,
+      quantity: item.quantity
+    })))
     console.log(state.cart.items[0].brand)
     console.log(address)
-    console.log()
+    console.log(state.user.user.user.username)
 
     if (!cardNumber || !address) {
       alert('Please fill in all address and card details.');
@@ -66,14 +69,14 @@ const CartScreen = ({ route,navigation }) => {
     
     axios
     .post("https://off-api.vercel.app/api/orders/", {
-        customerName: state.user.user.username, // Use the customer's name
+        customerName: state.user.user.user.username, // Use the customer's name
         products: state.cart.items.map(item => ({
           title: item.title,
           quantity: item.quantity
         })),
         status: "Processing",
         amount: state.cart.items.reduce(
-            (total, item) => total + item.price * item.quantity,
+            (total, item) => (total + item.price * item.quantity)+200,
             0
         ),
         address: address,

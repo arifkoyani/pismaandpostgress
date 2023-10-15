@@ -35,7 +35,7 @@ const WishlistScreen = ({ route, navigation }) => {
 
   const renderProductCard = ({ item }) => (
     <TouchableOpacity style={styles.productCard} onPress={() => {handleProductPress(item._id)}}>
-      <Image source={{ uri: `https://off-api.vercel.app/${item.image }`}} style={styles.productImage} />
+      <Image source={{ uri: `${item.image }`}} style={styles.productImage} />
       <Text style={styles.productName}>{item.title}</Text>
       <Text style={styles.productPrice}>Price: Rs.{item.price}</Text>
     </TouchableOpacity>
@@ -71,20 +71,16 @@ const styles = StyleSheet.create({
   productCard: {
     flex: 1,
     borderRadius: 8,
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     margin: 8,
     padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
   },
   productImage: {
     width: "100%",
-    height: 160,
+    height: 200,
     borderRadius: 8,
     marginBottom: 8,
+    resizeMode:"contain"
   },
   productName: {
     fontSize: 16,

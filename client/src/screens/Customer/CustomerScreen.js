@@ -269,10 +269,17 @@ import { View, Text, StyleSheet ,Image, TextInput, FlatList, TouchableOpacity} f
 import { useState,useEffect } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
+import Sidebar from '../SideBar';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 // import { NavigationContainer } from "@react-navigation/native";
 
 const CustomerScreen = ({navigation}) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -310,7 +317,11 @@ const CustomerScreen = ({navigation}) => {
     <View style={styles.container}>
       {/* Top Row */}
       <View style={styles.topRow}>
-        <FontAwesome name="bars" size={24} style={styles.icon} onPress={() => navigation.openDrawer()}/>
+        <TouchableOpacity onPress={toggleSidebar}> 
+          <FontAwesome name="bars" size={24} style={styles.icon} />
+        </TouchableOpacity>
+        {isSidebarOpen && <Sidebar />}
+        
         <Text>Hello! Welcome to OFF!</Text>
        <TouchableOpacity onPress={() => navigation.navigate('CartScreen')}>
        <FontAwesome name="shopping-cart" size={24} style={styles.icon} /></TouchableOpacity> 

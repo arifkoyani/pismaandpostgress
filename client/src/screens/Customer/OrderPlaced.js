@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity,Image} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function OrderPlaced({ navigation }) {
@@ -12,10 +12,12 @@ export default function OrderPlaced({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.image} source={require('../../images/confirm.png')}></Image>
       <Text style={styles.text}>Order Placed</Text>
+      <Text style={styles.confirm}>Your order has been confirmed, we will send you confirmation email shortly.</Text>
       
       <TouchableOpacity style={styles.button} onPress={handleGoBack}>
-        <Text style={styles.buttonText}>Go back to home</Text>
+        <Text style={styles.buttonText}>Continue Shopping</Text>
       </TouchableOpacity>
     </View>
   );
@@ -28,22 +30,43 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff",
   },
+  image:{
+    marginBottom:150,
+  },
   text: {
-    fontSize: 24,
+    fontSize: 30,
+    marginTop:-100,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
   },
+  confirm:{
+    color: "#8F959E",
+    textAlign: "center",
+    fontSize: 15,
+    marginLeft: 50,
+    marginRight:50,
+    marginBottom:50,
+  },
   button: {
-    backgroundColor: "#09605e",
-    borderRadius: 8,
+    backgroundColor: "white",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginBottom: 10,
+    borderRadius: 10,
+    width: 200,
+    shadowColor: "#BD8853",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 3, 
   },
+
   buttonText: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#fff",
+    textAlign:"center"
   },
 });

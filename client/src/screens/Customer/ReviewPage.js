@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import StarRating from './StarRating';
 
@@ -7,8 +7,6 @@ const ReviewsPage = ({ route }) => {
   const [reviews, setReviews] = useState([]);
   const [reviewText, setReviewText] = useState('');
   const [starRating, setStarRating] = useState(0);
-  const kitchenId = route.params.kitchenId;
-  const customerName = route.params.customerName;
 
   useEffect(() => {
     fetchReviews();
@@ -29,7 +27,6 @@ const ReviewsPage = ({ route }) => {
   };
 
   const handleReviewSubmit = async () => {
-    const kitchenId = route.params.kitchenId;
     try {
 
       const data = {
@@ -68,24 +65,39 @@ const ReviewsPage = ({ route }) => {
   
   return (
     <View style={styles.container}>
+      <Text style={{textAlign:"center",fontWeight:"bold",fontSize:24}}>Add Review</Text>
       <View style={styles.addReviewContainer}>
-        <Text style={styles.addReviewTitle}>Write a Review</Text>
+      <Text style={styles.addReviewTitle}>Name</Text>
+      <TextInput
+          style={styles.reviewNameInput}
+          placeholder="Type your name"
+          value={reviewText}
+          onChangeText={(text) => setReviewText(text)}
+        />
+
+        <Text style={styles.addReviewTitle}>How was your experience</Text>
+        <TextInput
+          style={styles.reviewTextInput}
+          placeholder="Describe your experience"
+          value={reviewText}
+          onChangeText={(text) => setReviewText(text)}
+          numberOfLines={4}
+        />
+
+<Text style={styles.addReviewTitle}>Star</Text>
+
         <StarRating
           maxStars={5} // Set the maximum number of stars
           rating={starRating} // Pass the current rating value as a prop
           onStarPress={(rating) => setStarRating(rating)} // Pass a callback function to handle star press events
         />
-        <TextInput
-          style={styles.reviewTextInput}
-          placeholder="Enter your review"
-          value={reviewText}
-          onChangeText={(text) => setReviewText(text)}
-        />
-        <Button
-          title="Submit Review"
+        <TouchableOpacity
+        style={styles.button}
           onPress={handleReviewSubmit}
           disabled={!reviewText || starRating === 0}
-        />
+        ><Text style={styles.buttonText}>Submit Review</Text>
+        </TouchableOpacity>
+
       </View>
       {reviews.length > 0 ? (
         <FlatList
@@ -114,11 +126,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
+  reviewNameInput:{
+    height: 40,
+    borderRadius:10,
+    backgroundColor:"lightgrey",
+    marginBottom: 8,
+ },
   reviewTextInput: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
+    borderRadius:10,
+    backgroundColor:"lightgrey",
     marginBottom: 8,
+    height:200
   },
   reviewItem: {
     marginBottom: 16,
@@ -126,6 +145,29 @@ const styles = StyleSheet.create({
   reviewText: {
     fontSize: 16,
     marginBottom: 8,
+  },
+  button: {
+    backgroundColor: "white",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginLeft:90,
+    marginTop:200,
+    width: 200,
+    shadowColor: "#BD8853",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 3, 
+  },
+
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign:"center"
   },
 });
 
