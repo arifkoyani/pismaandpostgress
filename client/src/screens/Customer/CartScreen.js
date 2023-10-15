@@ -56,6 +56,8 @@ const CartScreen = ({ route,navigation }) => {
   const handleSubmit = () =>{
     console.log(state.cart.items)
     console.log(state.cart.items[0].brand)
+    console.log(address)
+    console.log()
 
     if (!cardNumber || !address) {
       alert('Please fill in all address and card details.');
@@ -66,14 +68,16 @@ const CartScreen = ({ route,navigation }) => {
     .post("https://off-api.vercel.app/api/orders/", {
         customerName: state.user.user.username, // Use the customer's name
         address: address,
-        cartItems: state.cart.items,
+        products: state.cart.items.map(item => ({
+          productId: item._id,
+          quantity: item.quantity,
+        })),
         status: "Processing",
-        totalPrice: state.cart.items.reduce(
+        amount: state.cart.items.reduce(
             (total, item) => total + item.price * item.quantity,
             0
         ),
-        brandName: state.cart.items[0].brand, // Assuming you want the brand of the first item
-        paymentMethod: "card",
+        brand: state.cart.items[0].brand, // Assuming you want the brand of the first item
     })
     .then((response) => {
         console.log(response.data);
@@ -150,7 +154,7 @@ const CartScreen = ({ route,navigation }) => {
       <View style={styles.orderInfo}>
           <Text style={styles.ordertext} >Subtotal</Text>
           <TouchableOpacity >
-            <Text style={styles.ordertext2}>{state.cart.items.reduce(
+            <Text style={styles.ordertext2}>Rs {state.cart.items.reduce(
               (total, item) => total + item.price * item.quantity,
               0
             )}</Text>
@@ -165,7 +169,7 @@ const CartScreen = ({ route,navigation }) => {
       <View style={styles.orderInfo}>
           <Text style={styles.ordertext} >Total</Text>
           <TouchableOpacity >
-            <Text style={styles.ordertext2}>{state.cart.items.reduce(
+            <Text style={styles.ordertext2}>Rs {state.cart.items.reduce(
               (total, item) => (total + item.price * item.quantity) +200,
               0
             )}</Text>
