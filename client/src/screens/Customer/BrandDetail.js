@@ -21,7 +21,6 @@ const BrandDetailScreen = ({ route, navigation }) => {
 
   const fetchProducts = async () => {
     try {
-      // Fetch products of the selected brand using the brandId
       const response = await axios.get(`https://off-api.vercel.app/api/products/`);
       setProducts(response.data);
     } catch (error) {
@@ -42,7 +41,7 @@ const BrandDetailScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.imageBrand}>{{ uri: image }}</Image>
+      <Image style={styles.imageBrand} source={{ uri: image }}></Image>
       <Text style={styles.brandName}>{products.length} Products in Stock</Text>
       <FlatList
         data={products}
