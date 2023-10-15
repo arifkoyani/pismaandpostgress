@@ -9,6 +9,7 @@ const router = require("express").Router();
 
 router.post("/" , async (req,res)=>{
      const newOrder = new Order(req.body);
+     console.log(newOrder)
 
      try{
       const savedOrder = await newOrder.save();
