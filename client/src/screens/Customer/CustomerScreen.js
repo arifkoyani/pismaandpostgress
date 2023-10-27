@@ -11,6 +11,7 @@ const CustomerScreen = ({navigation}) => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  
 
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');

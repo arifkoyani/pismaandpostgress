@@ -3,15 +3,14 @@ import { View,Image,TouchableOpacity,Text ,Modal,TouchableWithoutFeedback } from
 import { StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { logout } from '../features/UserSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch ,useSelector} from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-
-const user = (state) => state.user.user;
 
 const CustomSidebar = ({ isOpen, toggleSidebar }) => {
   const dispatch=useDispatch();
   const navigation = useNavigation();
-
+  const user = useSelector((state) => state.user);
+  console.log(user)
   const sidebarStyles = isOpen
   ? [styles.sidebar, styles.sidebarOpen]
   : [styles.sidebar, styles.sidebarClosed];
@@ -33,7 +32,7 @@ const CustomSidebar = ({ isOpen, toggleSidebar }) => {
     <View style={{ flexDirection: 'row', alignItems: 'center', margin: 10,marginTop:30 }}>
     <Image source={require('../images/avatar.jpg')}  onClick={() => navigation.navigate('CustomerScreen')} style={{ width: 40, height: 40, borderRadius: 50 }} />
       <View style={{ marginLeft: 10 }}>
-        <Text>{user.username}</Text>
+        <Text>{user.user.user.username}</Text>
         <Text>Verified Profile</Text>
       </View>
     </View>

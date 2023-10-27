@@ -6,7 +6,6 @@ const Sidebar = ({ navigation }) => {
   return (
       <View style={styles.sidebarContainer}>
        
-       
                 <TouchableOpacity
                  style={styles.sidebarItem}
                   onPress={() => navigateToEditProfile()}

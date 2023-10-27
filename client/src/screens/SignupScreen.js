@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TextInput, Button,TouchableOpacity } fro
 import axios from "axios";
 import CheckBox from 'expo-checkbox';
 import { FontAwesome } from '@expo/vector-icons';
+import auth from '@react-native-firebase/auth';
 
 const RegisterPage = ({navigation}) => {
   const [username, setUsername] = useState("");
@@ -13,7 +14,26 @@ const RegisterPage = ({navigation}) => {
   const [passwordErr,setPasswordErr] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
+  // GoogleSignin.configure({
+  //   webClientId: 'YOUR_WEB_CLIENT_ID',
+  // });
+  
+  // const signInWithGoogle = async () => {
+  //   try {
+  //     await GoogleSignin.hasPlayServices();
+  //     const userInfo = await GoogleSignin.signIn();
+  //     const idToken = userInfo.idToken;
+  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  //     await auth().signInWithCredential(googleCredential);
+  //     // User is now signed in with Google
+  //   } catch (error) {
+  //     console.error('Google sign-in error', error);
+  //   }
+  // };
+  
+  
     const handleRegistration = async() => {
+    
 
       if(username.length < 3){
         setNameErr("Name should be at least 3 characters long");
@@ -119,7 +139,7 @@ const RegisterPage = ({navigation}) => {
       <Text color="blue" style={styles.fbbuttonText}>Facebook</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.googlebutton}>
+    <TouchableOpacity style={styles.googlebutton} >
       <FontAwesome name="google" size={18} color="#FFFFFF" backgroundColor="red" style={styles.icon} />
       <Text color="red" style={styles.googlebuttonText} >Google</Text>
     </TouchableOpacity>
