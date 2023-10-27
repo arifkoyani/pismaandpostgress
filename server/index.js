@@ -12,11 +12,12 @@ const paymentRoute = require("./routes/payment");
 const brandsRoute = require('./routes/brands');
 const wishlistRoute = require('./routes/wishlist')
 const resetRoute = require('./routes/reset')
-const reviewRoute= require('./routes/reviews')
+const reviewRoute= require('./routes/reviews');
+const verificationRoute = require('./routes/verification')
 
 dotenv.config();
 
-const DB = 'mongodb://marwakhalid:marwakhalid123@marwa-shard-00-00.x9zjp.mongodb.net:27017,marwa-shard-00-01.x9zjp.mongodb.net:27017,marwa-shard-00-02.x9zjp.mongodb.net:27017/Off?ssl=true&replicaSet=atlas-6szo5v-shard-0&authSource=admin&retryWrites=true&w=majority';
+const DB = 'mongodb://marwakhalid:marwamarwa@marwa-shard-00-00.x9zjp.mongodb.net:27017,marwa-shard-00-01.x9zjp.mongodb.net:27017,marwa-shard-00-02.x9zjp.mongodb.net:27017/Off?ssl=true&replicaSet=atlas-6szo5v-shard-0&authSource=admin&retryWrites=true&w=majority';
 
 app.use(cors());
 
@@ -34,10 +35,11 @@ app.use("/api/brands", brandsRoute);
 app.use("/api/wishlist", wishlistRoute);
 app.use('/api/reset', resetRoute);
 app.use("/api/reviews",reviewRoute);
+app.use("/api/verification",verificationRoute);
 
 app.use(express.static("../client"));
 app.use('/uploads', express.static('uploads'));
 
-app.listen(5000, ()=>{
+app.listen(5002, ()=>{
     console.log("backened is running");
 });
