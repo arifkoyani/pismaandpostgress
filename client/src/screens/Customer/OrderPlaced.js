@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
   },
   image:{
     marginBottom:150,
-    width:"80%",
-    height:"10vh", 
+    width:"100%",
+    height:"25%", 
     borderRadius:30,
+    resizeMode:"contain"
   },
   text: {
     fontSize: 30,
