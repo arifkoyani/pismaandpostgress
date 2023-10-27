@@ -6,13 +6,27 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  Dimensions
 } from "react-native";
 import axios from "axios";
+import { FontAwesome } from "@expo/vector-icons";
+
 
 const WishlistScreen = ({ route, navigation }) => {
+  const { width } = Dimensions.get("window");
+
+// Check if a product is in the wishlist
+const isInWishlist = (productId) => {
+  return wishlist.includes(productId);
+};
+
+// Toggle a product's presence in the wishlist
+const toggleWishlist = (productId) => {
+    axios.delete(`http://localhost:5002/api/wishlist/${productId}`);
+  };
+
   const brand = route.params;
 
-  console.log(route.params)
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -34,22 +48,36 @@ const WishlistScreen = ({ route, navigation }) => {
   };
 
   const renderProductCard = ({ item }) => (
-    <TouchableOpacity style={styles.productCard} onPress={() => {handleProductPress(item._id)}}>
-      <Image source={{ uri: `http://localhost:5002/${item.image }`}} style={styles.productImage} />
+    <TouchableOpacity style={styles.productCard} onPress={() => handleProductPress(item._id)}>
+      {/* Heart icon to toggle wishlist */}
+      <View style={styles.productImageContainer}>
+      {/* Heart icon to toggle wishlist */}
+      <TouchableOpacity
+        style={styles.heartIcon}
+        onPress={() => toggleWishlist(item._id)}
+      >
+        <FontAwesome name={isInWishlist ? "heart" : "heart-o"} size={24} color="red" />
+          
+      </TouchableOpacity>
+      <Image source={{ uri: `http://localhost:5002/${item.image}` }} style={styles.productImage} />
+    </View>
+    
       <Text style={styles.productName}>{item.title}</Text>
       <Text style={styles.productPrice}>Price: Rs.{item.price}</Text>
     </TouchableOpacity>
   );
+  const numColumns = width < 20 ? 1 : 2;
 
   return (
     <View style={styles.container}>
       <Text style={styles.brandName}>{products.length} item in your wishlist</Text>
+      
       <FlatList
         data={products}
         keyExtractor={(item) => item._id}
         renderItem={renderProductCard}
         contentContainerStyle={styles.productList}
-        numColumns={2} 
+        numColumns={numColumns} 
       />
     </View>
   );
@@ -61,6 +89,18 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#f9f9f9",
   },
+  productImageContainer: {
+    position: "relative",
+    width: "100%",
+    height: 200,
+    marginBottom: 30,
+  },
+  heartIcon: {
+    top: 25, 
+    right: 5, 
+    zIndex:1
+  },
+    
   brandName: {
     fontSize: 18,
     fontWeight: "bold",

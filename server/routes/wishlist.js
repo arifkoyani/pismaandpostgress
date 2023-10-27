@@ -62,6 +62,25 @@ router.get("/:id", async (req, res)=>{
     }
 });
 
+router.delete("/:productId", async (req, res) => {
+  try {
+    const productId = req.params.productId;
+
+    // Find and remove the product from the wishlist
+    const deletedProduct = await Wishlist.findOneAndDelete({ product: productId });
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found in the wishlist" });
+    }
+
+    return res.json({ message: "Product removed from the wishlist" });
+  } catch (error) {
+    console.error("Error removing product from the wishlist:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
 
 // router.post("/:id", async (req, res) => {
 //     try {
