@@ -53,6 +53,11 @@ const ProductDetailScreen = ({ route, navigation }) => {
     }
   };
 
+  const handleAddCart = () => {
+    dispatch(addToCart({ ...product, quantity }))
+    navigation.navigate("CartScreen")
+  }
+
   return (
     <View style={styles.container}>
       <ImageBackground source={{ uri: `http://localhost:5002/${product.image}` }} style={styles.productImage}>
@@ -96,7 +101,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
       <Text style={styles.heading}>Description:</Text>
       <Text style={styles.productDescription}>{product.description}</Text>
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.button} onPress={() => dispatch(addToCart({ ...product, quantity }))}>
+        <TouchableOpacity style={styles.button} onPress={handleAddCart}>
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
