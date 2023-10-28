@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   imageBrand:{
     width:100,
-    height:50,
+    height:70,
     marginLeft:130,
   },
   productCard: {
