@@ -98,4 +98,16 @@ router.get("/income",async (req,res)=>{
    }
 });
 
+router.put("/:id", async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+      order.status = req.body.status;
+      const updatedStatus = await res.status.save();
+      res.json(updatedStatus);
+    }
+    catch (error) {
+      return res.status(404).json({ message: "User not found" });
+    }
+  });
+
  module.exports = router; 

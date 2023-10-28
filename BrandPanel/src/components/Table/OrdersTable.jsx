@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import "./Table.css";
+import EditIcon from "@material-ui/icons/Edit";
 
 const BasicTable = () => {
 
@@ -12,7 +13,40 @@ const BasicTable = () => {
   const user = useSelector((state) => state.user.user);
   const email = user.email;
 
+  const handleStatusEdit = async (orderId) => {
+   try{ 
+    const status = "Confirm";
+    const response = await axios.put(`http://localhost:5002/api/orders/${orderId}`, { status });
+    fetchOrders();
+    window.alert("Status updated successfully");
+  } catch (error) {
+    console.log("Error updating user status:", error);
+  }
+  }
+
+  const makeStyle = (status) => {
+    if (status === "Processing") {
+      return {
+        color: "red",
+      };
+    } else if (status === "Confirm") {
+      return {
+        color: "green",
+      };
+    } else {
+      return {
+        background: "#59bfff",
+        color: "white",
+      };
+    }
+  };
+
 useEffect(() => {
+  fetchOrders();
+}, []);
+
+
+const fetchOrders = ()=>{
   axios.get(`http://localhost:5002/api/orders`)
     .then(response => {
       setOrders(response.data);
@@ -21,9 +55,16 @@ useEffect(() => {
     .catch(error => {
     
     });
-}, []);
+  }
 
 const columns = [
+  {
+    name: "_id",
+    label: "Id",
+    options:{
+      display: "excluded",
+    },
+  },
   {
     name: "rowNumber",
     label: "Order",
@@ -85,6 +126,11 @@ const columns = [
   {
     name: "status",
     label: "Status",
+    options:{
+      customBodyRender: (value) => (
+        <span style={makeStyle(value)}>{value}</span> 
+      ),
+    }
   },
   {
     name: "address",
@@ -98,6 +144,36 @@ const columns = [
       sort: true,
     },
   },
+  {
+    name: "edit",
+    label: "Edit",
+    options: {
+      filter: false,
+      sort: false,
+      customBodyRender: (value, tableMeta) => {
+        const isConfirmed = tableMeta.rowData[4] === "Confirm";
+  
+        const setStatus = () => {
+          if (isConfirmed) {
+            return (
+              <span>Confirmed</span>
+            );
+          } else {
+            return (
+              <>
+                <EditIcon
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleStatusEdit(tableMeta.rowData[0])}
+                />
+              </>
+            );
+          }
+        };
+  
+        return setStatus();
+      },
+    },
+  }  
 ];
 
 const options = {

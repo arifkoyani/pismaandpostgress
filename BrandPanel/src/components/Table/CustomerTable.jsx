@@ -42,7 +42,6 @@ export default function BasicTable() {
   };
 
   const handleEditStatus = (userId) =>{
-    // Toggle the showOptions for a specific user
     setShowOptions({
       ...showOptions,
       [userId]: !showOptions[userId],

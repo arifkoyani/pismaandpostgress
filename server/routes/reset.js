@@ -16,7 +16,7 @@ router.post("/", async(req, res) => {
   }
   else {
     
-    const token = crypto.randomBytes(3).toString("hex");
+    const token = Math.floor(100000 + Math.random() * 900000);
     console.log( user)
     console.log( user.resetToken)
     user.resetToken = token;
@@ -28,13 +28,13 @@ router.post("/", async(req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "shabbiralam45524@gmail.com",
-        pass: "oyll drut venp tils",
+        user: "marwakhalid558@gmail.com",
+        pass: "lzwh rpnh sbmf skal",
       },
     });
 
     const mailOptions = {
-      from: "shabbiralam45524@gmail.com",
+      from: "marwakhalid558@gmail.com",
       to: email,
       subject: "Password Reset Link",
       html: `<p>You have requested a password reset. Here is the code to reset your password:</p>
