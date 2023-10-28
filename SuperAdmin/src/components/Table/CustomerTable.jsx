@@ -28,19 +28,19 @@ export default function BasicTable() {
   const [showOptions, setShowOptions] = useState({});
 
   useEffect(() => {
-    fetchUsers();
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("http://localhost:5002/api/users/"); 
+        const data = await response.json();
+        setUserList(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+  
   }, []);
 
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch("http://localhost:5002/api/users/"); 
-      const data = await response.json();
-      setUserList(data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
-
+ 
   const handleEditStatus = (userId) =>{
     // Toggle the showOptions for a specific user
     setShowOptions({
@@ -65,7 +65,7 @@ export default function BasicTable() {
       // Implement the logic to delete the user by making an HTTP DELETE request
       const response = await axios.delete(`http://localhost:5002/api/users/${userId}`);
       console.log("User deleted successfully");
-      // You can also update the user list in state to reflect the deletion
+      await fetchUsers();
       // fetchUsers();
     } catch (error) {
       console.log("Error deleting user:", error);
@@ -98,12 +98,21 @@ export default function BasicTable() {
     },
     {
       name: "createdAt",
-      label: "Date-Time",
+      label: "Order Date",
       options: {
         filter: true,
         sort: true,
+        customBodyRender: (value) => {
+          // Create a Date object from the ISO 8601 date string
+          const date = new Date(value);
+    
+          // Format the date into a human-readable format (e.g., "dd/mm/yyyy hh:mm:ss")
+          const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    
+          return formattedDate;
+        },
       },
-    },
+    },  
     {
       name: "status",
       label: "Status",

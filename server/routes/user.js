@@ -112,6 +112,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // Find the user by ID and remove it
+    const user = await Pending.findByIdAndDelete(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 // router.get("/", async (req, res) => {
 //   try {
 //     const users = await Pending.find({}, "name email createdAt address status _id");
