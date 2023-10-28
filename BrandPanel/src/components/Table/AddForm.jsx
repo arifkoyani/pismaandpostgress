@@ -11,8 +11,8 @@ const AddForm = ({ onClose }) => {
 
   const handleBrandChange = (e) => {
     setSelectedBrand(e.target.value);
-  // };
-
+  };
+  
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
