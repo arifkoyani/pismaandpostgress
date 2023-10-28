@@ -39,17 +39,7 @@ const CustomerOrder = ({navigation}) => {
         Status: {item.status}
       </Text>
     )}
-    {item.status === "Preparing" && (
-      <Text style={{ fontSize: 16, marginBottom: 8, color: "orange" }}>
-        Status: {item.status}
-      </Text>
-    )}
-    {item.status === "Picked up" && (
-      <Text style={{ fontSize: 16, marginBottom: 8, color: "purple" }}>
-        Status: {item.status}
-      </Text>
-    )}
-    {item.status === "Delivered" && (
+    {item.status === "Confirm" && (
       <Text style={{ fontSize: 16, marginBottom: 8, color: "green" }}>
         Status: {item.status}
       </Text>
