@@ -8,7 +8,7 @@ router.post("/:email", async(req, res) => {
   const email = req.params.email;
   console.log(email)
     
-    const token = crypto.randomBytes(2).toString("hex");
+  const token = Math.floor(100000 + Math.random() * 900000);
     const tokenExpiration = Date.now() + 3600000;
 
     const transporter = nodemailer.createTransport({
