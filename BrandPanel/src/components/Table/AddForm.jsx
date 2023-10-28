@@ -21,7 +21,6 @@ const AddForm = ({ onClose }) => {
       formData.append("price", parseFloat(document.getElementById("price").value));
       formData.append("description", document.getElementById("description").value);
       formData.append("category", selectedCategory);
-      formData.append("brand", selectedBrand)
 
       const fileInput = document.getElementById("fileInput");
       if (fileInput.files.length > 0) {
@@ -109,7 +108,7 @@ const AddForm = ({ onClose }) => {
               <label className="radio-label">
                 <input
                   type="radio"
-                  name="brand2"
+                  name="brand"
                   value="Maria B"
                   checked={selectedBrand === "Maria B"}
                   onChange={handleBrandChange}
@@ -119,9 +118,9 @@ const AddForm = ({ onClose }) => {
               <label className="radio-label">
                 <input
                   type="radio"
-                  name="brand3"
+                  name="brand"
                   value="Gul Ahmad"
-                  checked={selectedBrand === "Gul Ahmad"}
+                  checked={selectedBrand}
                   onChange={handleBrandChange}
                 />
                 Gul Ahmad
