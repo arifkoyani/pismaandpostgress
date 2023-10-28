@@ -142,8 +142,17 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+      customBodyRender: (value) => {
+        // Create a Date object from the ISO 8601 date string
+        const date = new Date(value);
+  
+        // Format the date into a human-readable format (e.g., "dd/mm/yyyy hh:mm:ss")
+        const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  
+        return formattedDate;
+      },
     },
-  },
+  },  
   {
     name: "edit",
     label: "Edit",
@@ -161,6 +170,7 @@ const columns = [
           } else {
             return (
               <>
+                <span>Confirm</span>
                 <EditIcon
                   style={{ cursor: "pointer" }}
                   onClick={() => handleStatusEdit(tableMeta.rowData[0])}
@@ -174,6 +184,7 @@ const columns = [
       },
     },
   }  
+
 ];
 
 const options = {
