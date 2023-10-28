@@ -28,17 +28,18 @@ export default function BasicTable() {
   const [showOptions, setShowOptions] = useState({});
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("http://localhost:5002/api/users/"); 
-        const data = await response.json();
-        setUserList(data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
+    fetchUsers();
   
   }, []);
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:5002/api/users/"); 
+      const data = await response.json();
+      setUserList(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
  
   const handleEditStatus = (userId) =>{
@@ -98,7 +99,7 @@ export default function BasicTable() {
     },
     {
       name: "createdAt",
-      label: "Order Date",
+      label: "Joining",
       options: {
         filter: true,
         sort: true,
