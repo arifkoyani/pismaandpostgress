@@ -3,6 +3,18 @@
     "name": "fyp-off",
     "slug": "fyp-off",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"]
-    }
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.anonymous.fypoff"
+    },
+    "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "plugins": [
+      "@react-native-google-signin/google-signin"
+    ]
+  }
 }

@@ -31,21 +31,19 @@ const VerificationCode = ({navigation,route}) => {
 
   const handleSubmit = ()=>{
     console.log(code)
-    // submit the verification code to backend here
-    // axios.post("http://localhost:5002/api/verification/confirm", {
-    //     token: emailToken,
-    //     expiration: expirationDate,
-    //     code: code.join('')
-    // })
-    // .then((response)=>{
-    //     window.alert(response.data.message);
+    axios.post("http://localhost:5002/api/verification/confirm", {
+        token: emailToken,
+        expiration: expirationDate,
+        code: code.join('')
+    })
+    .then((response)=>{
+        window.alert(response.data.message);
         navigation.navigate('Signin');
-    // })
-    // .catch((err)=>{
-    //   navigation.navigate('Signin');
-    //     window.alert(err.response.data.message);
-    //     console.log(err)
-    // });
+    })
+    .catch((err)=>{
+        window.alert(err.response.data.message);
+        console.log(err)
+    });
   }
 
   return (

@@ -6,7 +6,6 @@ const cors = require("cors");
 
 const userRoute = require("./routes/user");
 const productRoute = require("./routes/product");
-const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const paymentRoute = require("./routes/payment");
 const brandsRoute = require('./routes/brands');
@@ -17,7 +16,7 @@ const verificationRoute = require('./routes/verification')
 
 dotenv.config();
 
-const DB = 'mongodb://marwakhalid:marwamarwa@marwa-shard-00-00.x9zjp.mongodb.net:27017,marwa-shard-00-01.x9zjp.mongodb.net:27017,marwa-shard-00-02.x9zjp.mongodb.net:27017/Off?ssl=true&replicaSet=atlas-6szo5v-shard-0&authSource=admin&retryWrites=true&w=majority';
+const DB = 'mongodb+srv://shabbiralam45524:fakharalam110@cluster0.obk2i2j.mongodb.net/OFF';
 
 app.use(cors());
 
@@ -28,7 +27,6 @@ mongoose.connect(DB,{}).then(()=>{
 app.use(express.json());
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
-app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/payments", paymentRoute);
 app.use("/api/brands", brandsRoute);

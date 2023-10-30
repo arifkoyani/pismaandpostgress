@@ -69,8 +69,6 @@ const columns = [
     name: "rowNumber",
     label: "Order",
     options: {
-      filter: false,
-      sort: false,
       customBodyRender: (value, tableMeta) => (
         <span>{tableMeta.rowIndex + 1}</span>
       ),
@@ -81,6 +79,8 @@ const columns = [
       name: "products",
       label: "Products",
       options: {
+        filter: true,
+        sort: true,
         customBodyRender: (products) => (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {products.map((product, index) => (
@@ -192,6 +192,7 @@ const options = {
   filterType: "textField", 
   responsive: "standard",
   rowsPerPage: 10,
+  search:true,
   rowsPerPageOptions: [10, 25, 50],
 };
 
