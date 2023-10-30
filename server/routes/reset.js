@@ -16,7 +16,7 @@ router.post("/", async(req, res) => {
   }
   else {
     
-    const token = Math.floor(100000 + Math.random() * 900000);
+    const token = Math.floor(1000 + Math.random() * 9999);
     console.log( user)
     console.log( user.resetToken)
     user.resetToken = token;
