@@ -23,6 +23,7 @@ const isInWishlist = (productId) => {
 // Toggle a product's presence in the wishlist
 const toggleWishlist = (productId) => {
     axios.delete(`http://localhost:5002/api/wishlist/${productId}`);
+    fetchProducts();
   };
 
   const brand = route.params;
