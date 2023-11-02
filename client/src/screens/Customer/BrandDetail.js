@@ -10,9 +10,10 @@ import {
 import axios from "axios";
 
 const BrandDetailScreen = ({ route, navigation }) => {
-  const image = route.params;
+  const {image,brand} = route.params;
+  console.log(brand)
 
-  console.log(route.params)
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const BrandDetailScreen = ({ route, navigation }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:5002/api/products/`);
+      const response = await axios.get(`http://localhost:5002/api/products`);
       setProducts(response.data);
     } catch (error) {
       console.log("Error fetching products:", error);

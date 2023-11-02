@@ -55,9 +55,10 @@ router.put("/:id", async (req,res)=>{
     
 });
 
-// router.get("/brand/:brand", async (req, res) => {
+// router.get("/brand", async (req, res) => {
 //   try {
-//     const brand = req.params.brand; // Extract brandName from the route parameters
+//     const brand = req.body.brand; 
+//     console.log(req.body)
 
 //     // Use your Product model to find products with the specified brand name
 //     const products = await Product.find({ brand: brand }).lean();
