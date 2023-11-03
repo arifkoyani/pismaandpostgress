@@ -6,12 +6,12 @@ const bcrypt = require("bcryptjs");
 
 router.post("/confirm", async(req, res) => {
   try{
-    const {code,token,expiration} = req.body.code;
+    const {code,token,expirationDate} = req.body;
     console.log(req.body);
-    if(token != code){
+    if(!(code === token)){
       return res.status(400).send({success:false, message:"Code is wrong"});
     }
-    if(expiration < new Date()){
+    if(expirationDate < new Date()){
       return res.status(400).send({success:false, message:"Token has expired"});
     }
     
@@ -33,13 +33,13 @@ router.post("/:email", async(req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "marwakhalid558@gmail.com",
-        pass: "lzwh rpnh sbmf skal",
+        user: "ranashairy492@gmail.com",
+        pass: "gkxl zqpa stks hczb",
       },
     });
 
     const mailOptions = {
-      from: "marwakhalid558@gmail.com",
+      from: "ranashairy492@gmail.com",
       to: email,
       subject: "Verification code for registration",
       html: `<p>You have requested to register on OFF. Here is your verification code.</p>

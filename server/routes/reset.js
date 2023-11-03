@@ -20,7 +20,7 @@ router.post("/", async(req, res) => {
     console.log( user)
     console.log( user.resetToken)
     user.resetToken = token;
-    user.resetTokenExpiration = Date.now() + 3600000;
+    user.resetTokenExpiration = Date.now() + 3600000; 
     console.log( user.resetToken),
     console.log( user.resetTokenExpiration),
     await user.save();

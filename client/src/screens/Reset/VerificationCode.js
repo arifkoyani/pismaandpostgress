@@ -3,7 +3,8 @@ import { View, TextInput, Text, Button, Image,StyleSheet } from 'react-native';
 import axios from 'axios';
 
 const VerificationCode = ({navigation,route}) => {
-  const [code, setCode] = useState(['', '', '', '']);
+  const [code, setCode] = useState([0, 0, 0, 0]);
+  console.log(route.params)
   const inputRefs = [];
   const [emailToken,setEmailToken] = useState('');
   const [expirationDate,setExpiryDate]=useState('');
@@ -33,8 +34,8 @@ const VerificationCode = ({navigation,route}) => {
     console.log(code)
     axios.post("http://localhost:5002/api/verification/confirm", {
         token: emailToken,
-        expiration: expirationDate,
-        code: code.join('')
+        expirationDate: expirationDate,
+        code : parseInt(code.join(''))
     })
     .then((response)=>{
         window.alert(response.data.message);
@@ -42,7 +43,7 @@ const VerificationCode = ({navigation,route}) => {
     })
     .catch((err)=>{
         window.alert(err.response.data.message);
-        console.log(err)
+        console.log(err.response.data.message)
     });
   }
 

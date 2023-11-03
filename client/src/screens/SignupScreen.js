@@ -71,7 +71,7 @@ const RegisterPage = ({navigation}) => {
             axios.post(`http://localhost:5002/api/verification/${email}`)
             .then((response)=>{
               console.log(response)
-              navigation.navigate("VerificationCode",{token:response.data.token.token,expirationDate:response.data.token.expirationDate})
+              navigation.navigate("VerificationCode",{token:response.data.token.token,expirationDate:response.data.token.tokenExpiration})
             })
             .catch((err)=>{
               alert(err)
