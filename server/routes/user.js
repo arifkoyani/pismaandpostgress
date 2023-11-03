@@ -46,7 +46,7 @@ router.post("/register", async (req, res) => {
     }
 
     // Registration successful
-    return res.json({ message: "Registration Done: Account send for approval" });
+    return res.json({ message: "Registration Done: Account send for approval" , email});
 
     // res.status(200).json(response);
   } catch (error) {
@@ -89,7 +89,7 @@ router.get("/:id", async (req, res) => {
   //fetch one user data and send
   try {
     //await for async return
-    const user = await User.findById(req.params.id);
+    const user = await Pending.findById(req.params.id);
     //send in json format.. .send will send in text form
     res.json(user);
     console.log("Get Request by ID Worked");
@@ -97,6 +97,22 @@ router.get("/:id", async (req, res) => {
     res.send("Error: " + err);
   }
 });
+
+// //get single record
+// router.post("/getByEmail", async (req, res) => {
+//   //fetch one user data and send
+//   try {
+//     console.log(req.body)
+//     const {email} = req.query;
+//     //await for async return
+//     const user = await Pending.findOne({email:email});
+//     //send in json format.. .send will send in text form
+//     res.json(user);
+//     console.log("Get Request by email Worked");
+//   } catch (err) {
+//     res.send("Error: " + err);
+//   }
+// });
 
 router.get("/", async (req, res) => {
   //fetch all users and send
@@ -142,7 +158,7 @@ router.delete('/:id', async (req, res) => {
 
 
 router.put("/:id", async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await Pending.findById(req.params.id);
 
   user.fullName = req.body.fullName;
   user.email = req.body.email;

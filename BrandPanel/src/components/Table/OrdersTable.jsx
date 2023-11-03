@@ -176,6 +176,7 @@ const columns = [
               <span>Confirmed</span>
             );
           } else {
+            if (tableMeta.rowData[4] !== "Cancelled") {
             return (
               <>
                 <span>Confirm</span>
@@ -184,7 +185,13 @@ const columns = [
                   onClick={() => handleStatusEdit(tableMeta.rowData[0])}
                 />
               </>
-            );
+            )}
+            else{
+              return (
+                <span>Cancelled</span>
+              );
+
+            };
           }
         };
   

@@ -85,7 +85,6 @@ const RegisterPage = ({navigation}) => {
         }
       };
     
-
   return (
     <View style={styles.container}>
       <Image
