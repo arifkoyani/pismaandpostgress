@@ -20,20 +20,24 @@ const BasicTable = () => {
     fetchOrders();
     window.alert("Status updated successfully");
   } catch (error) {
-    console.log("Error updating user status:", error);
+    console.log("Error updating order status:", error);
   }
   }
 
   const makeStyle = (status) => {
     if (status === "Processing") {
       return {
-        color: "red",
+        color: "orange",
       };
     } else if (status === "Confirm") {
       return {
         color: "green",
       };
-    } else {
+    }  else if (status === "Cancelled") {
+      return {
+        color: "red",
+    };
+    }else {
       return {
         background: "#59bfff",
         color: "white",
@@ -135,6 +139,10 @@ const columns = [
   {
     name: "address",
     label: "Address",
+  },
+  {
+    name: "customerName",
+    label: "Customer Name",
   },
   {
     name: "createdAt",

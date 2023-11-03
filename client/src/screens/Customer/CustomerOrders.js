@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList,TouchableOpacity } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -10,6 +10,17 @@ const CustomerOrder = ({navigation}) => {
       fetchOrders();
     }, []);
   
+    const handleCancelOrder = async(orderId) => {
+      try{ 
+        const status = "Cancelled";
+        const response = await axios.put(`http://localhost:5002/api/orders/${orderId}`, { status });
+        fetchOrders();
+        window.alert("Status updated successfully");
+      } catch (error) {
+        console.log("Error updating user status:", error);
+      }
+    }
+
     const fetchOrders = async () => {
       try {
         const response = await axios.get("http://localhost:5002/api/orders");
@@ -33,20 +44,36 @@ const CustomerOrder = ({navigation}) => {
             <Text style={styles.productInfo}>Quantity: {product.quantity}</Text>
           </View>
         ))}
-      
-    {item.status === "Processing" && (
-      <Text style={{ fontSize: 16, marginBottom: 8, color: "red" }}>
-        Status: {item.status}
-      </Text>
-    )}
-    {item.status === "Confirm" && (
-      <Text style={{ fontSize: 16, marginBottom: 8, color: "green" }}>
-        Status: {item.status}
-      </Text>
-    )}
+    
+        {item.status === "Processing" && (
+          <Text style={{ fontSize: 16, marginBottom: 8, color: "orange" }}>
+            Status: {item.status}
+          </Text>
+        )}
+    
+        {item.status === "Confirm" && (
+          <Text style={{ fontSize: 16, marginBottom: 8, color: "green" }}>
+            Status: {item.status}
+          </Text>
+        )}
+
+        {item.status === "Cancelled" && (
+          <Text style={{ fontSize: 16, marginBottom: 8, color: "red" }}>
+            Status: {item.status}
+          </Text>
+        )}
+    
+        {item.status === "Processing" && (
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => handleCancelOrder(item._id)}
+          >
+            <Text style={styles.cancelButtonText}>Cancel Order</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
-  
+    
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Order History</Text>
@@ -84,6 +111,18 @@ const CustomerOrder = ({navigation}) => {
       fontSize: 16,
       marginBottom: 8,
     },
+    cancelButton: {
+      backgroundColor: "red",
+      padding: 8,
+      borderRadius: 8,
+      alignItems: "center",
+      marginTop: 8,
+    },
+    cancelButtonText: {
+      color: "white",
+      fontWeight: "bold",
+    },
+    
   });
   
   export default CustomerOrder;
